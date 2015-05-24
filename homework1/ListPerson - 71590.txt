@@ -1,0 +1,281 @@
+#include <iostream>
+#include <cstring>
+#include <math.h>
+#include <stdio.h>
+#include <cstdlib>
+
+using namespace std;
+
+
+class Date
+{
+	unsigned day, month, year;
+
+	bool isValid(unsigned, unsigned, unsigned)
+	{
+		return 1;
+	};
+public:
+	Date();
+	Date(unsigned, unsigned, unsigned);
+	void print()const;
+	unsigned getDay()const;
+	unsigned getMonth()const;
+	unsigned getYear()const;
+	bool operator==(const Date&);
+
+	void setDate(unsigned, unsigned, unsigned);
+};
+
+Date::Date()
+{
+	this->setDate(1,1, 1980);
+}
+
+Date::Date(unsigned newDay, unsigned newMonth, unsigned newYear) :
+day(1), month(1), year(1980)
+{
+	this->setDate(newDay, newMonth, newYear);
+}
+
+unsigned::Date::getDay()const
+{
+	return day;
+}
+
+unsigned::Date::getMonth()const
+{
+	return month;
+}
+
+unsigned::Date::getYear()const
+{
+	return year;
+}
+
+void::Date::setDate(unsigned newDay, unsigned newMonth, unsigned newYear)
+{
+	if (isValid(newDay, newMonth, newYear))
+	{
+		year = newYear;
+		month = newMonth;
+		day = newDay;
+	}
+
+}
+
+void::Date::print()const
+{
+	cout << day << " " << month << " " << year << endl;
+}
+
+bool Date::operator==(const Date&other)
+{
+	if (this->day == other.day&&this->month == other.month)
+		return true;
+	else
+		return false;
+}
+
+class Card
+{
+	char*lastName;
+	Date dateOfBirth;
+public:
+	Card();
+	void setCard(char*, unsigned ,unsigned,unsigned);
+	char* getLastName();
+	Date& getDate();
+	void print() const;
+	unsigned getDay();
+	unsigned getMonth();
+	unsigned getYear();
+};
+
+Card::Card():
+lastName(NULL)
+{
+	this->setCard("Ivanov", 4, 4, 1990);
+}
+
+void Card::setCard(char*name,unsigned day,unsigned month,unsigned year)
+{
+	delete[] this->lastName;
+	int length = strlen(name) + 1;
+	this->lastName = new char[length];
+	strcpy_s(this->lastName, length, name);
+
+	this->dateOfBirth.setDate(day, month, year);
+
+}
+
+
+char* Card::getLastName()
+{
+	return this->lastName;
+}
+
+void Card::print() const
+{
+	cout << this->lastName<<" ";
+	this->dateOfBirth.print();
+}
+
+Date& Card::getDate()
+{
+	return this->dateOfBirth;
+}
+
+class ListPerson
+{
+	Card* cards;
+	int size;
+	int capacity;
+
+public:
+	ListPerson();
+	ListPerson addCard(const Card&);
+	ListPerson removeCard(char*);
+	void getZodiac( Card&);
+	void print() const;
+	ListPerson& operator+(ListPerson&);
+	ListPerson& operator/(ListPerson&);
+};
+
+ListPerson::ListPerson()
+{
+	this->size = 5;
+	this->capacity = 10;
+	this->cards = new Card[this->capacity];
+}
+
+ListPerson ListPerson::addCard(const Card& other)
+{
+	if (this->size == this->capacity)
+	{
+		this->capacity*=2;
+		Card *old = this->cards;
+		this->cards = new Card[this->capacity];
+		for (int i = 0; i < this->size; i++)
+		{
+			this->cards[i] = old[i];
+		}
+		
+		delete[] old;
+	}
+
+	cards[this->size] = other;
+	size++;
+	return *this;
+}
+
+ListPerson ListPerson::removeCard(char*lastName)
+{
+	for (int i = 0; i < this->size; i++)
+	{
+		if (strcmp(this->cards[i].getLastName(), lastName) == 0)
+		{
+			this->cards[i] = this->cards[this->size - 1];
+			size--;
+			i--;
+		}
+
+	}
+	return *this;
+}
+
+unsigned Card::getDay()
+{
+	return this->dateOfBirth.getDay();
+}
+
+unsigned Card::getMonth()
+{
+	return this->dateOfBirth.getMonth();
+}
+
+unsigned Card::getYear()
+{
+	return this->dateOfBirth.getYear();
+}
+
+
+
+void ListPerson::getZodiac( Card& one)
+{
+	int zodiac = 0;
+
+	if (one.getMonth() == 3 && one.getDay() >= 21 || one.getMonth() == 4 && one.getDay() < 20)
+		zodiac = 0;
+	else if (one.getMonth() == 4 && one.getDay() >= 21 || one.getMonth() == 5 && one.getDay() <= 21)
+		zodiac = 1;
+	else if (one.getMonth() == 5 && one.getDay() >= 22 || one.getMonth() == 6 && one.getDay() <= 21)
+		zodiac = 2;
+	else if (one.getMonth() == 6 && one.getDay() >= 22 || one.getMonth() == 7 && one.getDay() <= 22)
+		zodiac = 3;
+	else if (one.getMonth() == 7 && one.getDay() >= 23 || one.getMonth() == 8 && one.getDay() <= 21)
+		zodiac = 4;
+	else if (one.getMonth() == 8 && one.getDay() >= 22 || one.getMonth() == 9 && one.getDay() <= 23)
+		zodiac = 5;
+	else if (one.getMonth() == 9 && one.getDay() >= 24 || one.getMonth() == 10 && one.getDay() <= 23)
+		zodiac = 6;
+	else if (one.getMonth() == 10 && one.getDay() >= 24 || one.getMonth() == 11 && one.getDay() <= 22)
+		zodiac = 7;
+	else if (one.getMonth() == 11 && one.getDay() >= 23 || one.getMonth() == 12 && one.getDay() <= 22)
+		zodiac = 8;
+	else if (one.getMonth() == 12 && one.getDay() >= 23 || one.getMonth() == 1 && one.getDay() <= 20)
+		zodiac = 9;
+	else if (one.getMonth() == 1 && one.getDay() >= 21 || one.getMonth() == 2 && one.getDay() <= 19)
+		zodiac = 10;
+	else if (one.getMonth() == 2 && one.getDay() >= 20 || one.getMonth() == 2 && one.getDay() <= 20)
+		zodiac = 11;
+
+	switch (zodiac)
+	{
+	case 0: cout << "Aries" << endl; break;
+	case 1: cout << "Taurus" << endl; break;
+	case 2: cout << "Gemini" << endl; break;
+	case 3: cout << "Cancer" << endl; break;
+	case 4: cout << "Leo" << endl; break;
+	case 5: cout << "Virgo" << endl; break;
+	case 6: cout << "Libra" << endl; break;
+	case 7: cout << "Scorpio" << endl; break;
+	case 8: cout << "Sagittarius" << endl; break;
+	case 9: cout << "Capricorn" << endl; break;
+	case 10: cout << "Aquarius" << endl; break;
+	case 11: cout << "Pisces" << endl; break;
+	}
+
+}
+
+ListPerson& ListPerson::operator+(ListPerson& other)
+{
+	int length = this->size;
+
+	this->size += other.size;
+	this->capacity += other.capacity;
+
+	int j = 0;
+	for (int i = length; i < this->size; i++)
+	{
+		this->cards[i] = this->cards[j];
+	}
+	return *this;
+}
+
+void ListPerson::print() const
+{
+	for (int i = 0; i < this->size; i++)
+	{
+		this->cards[i].print();
+	}
+}
+
+int main()
+{
+	
+
+
+	system("pause");
+	return 0;
+}

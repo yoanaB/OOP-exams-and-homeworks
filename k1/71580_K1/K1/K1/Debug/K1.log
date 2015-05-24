@@ -1,0 +1,12 @@
+﻿Build started 4/27/2015 10:49:17 AM.
+     1>Project "c:\Users\grade\documents\visual studio 2013\Projects\K1\K1\K1.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Programmer.cpp
+         Programmer.cpp
+     1>c:\users\grade\documents\visual studio 2013\projects\k1\k1\programmer.cpp(20): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 2013\vc\include\string.h(112) : see declaration of 'strcpy'
+     1>Done Building Project "c:\Users\grade\documents\visual studio 2013\Projects\K1\K1\K1.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.81

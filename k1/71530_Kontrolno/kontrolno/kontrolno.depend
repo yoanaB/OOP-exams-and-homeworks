@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1430124758 source:c:\users\grade\documents\kontrolno\main.cpp
+	<iostream>
+	<cassert>
+	<cstring>
+

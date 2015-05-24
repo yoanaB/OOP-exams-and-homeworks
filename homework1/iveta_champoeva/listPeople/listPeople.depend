@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1430090734 source:c:\users\ivi\desktop\listpeople\main.cpp
+	<iostream>
+	<cstring>
+	<cassert>
+

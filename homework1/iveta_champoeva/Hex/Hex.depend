@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1430089635 source:c:\users\ivi\desktop\hex\main.cpp
+	<iostream>
+	<cstring>
+	<cassert>
+	<cmath>
+
