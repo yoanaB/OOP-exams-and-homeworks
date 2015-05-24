@@ -7,6 +7,7 @@
 using namespace std;
 
 // 4-te osnovni neshta sa: default-en konstruktor, destruktor, copy-konstruktor, operator ravno ( Golqmata 4-ka)
+// verno li we?? az da ne znam....
 
 class Programmer
 {
@@ -86,6 +87,8 @@ public:
     {
         return this -> iq < other.iq;
     }
+    // whaat??
+    // - 0.2
      Programmer& operator  == (int iq)
     {
         this -> iq == iq;
@@ -99,6 +102,8 @@ private:
     Programmer* programmers;
     int size;
 public:
+    //??
+    // - 0.1
     Programmer(int size, Programmer* programmers)
     {
         this -> size = size;
@@ -113,10 +118,12 @@ public:
     {
         return size;
     }
+    // no...
     void setSize(int size)
     {
         this -> size = size;
     }
+
      void addProgrammer(Programmer &other)
     {
         Programmer *temp = new Programmer[getSize() + 1];
@@ -133,6 +140,7 @@ public:
         }
         delete[] temp;
     }
+    //whaat?
     void removeProgrammer(char* name)
     {
         for(int i = 0; i < getSize(); i++)
@@ -168,7 +176,8 @@ public:
     }
 
 };
-
+// missing a lot of things 
+// - 0.8
 class Company
 {
 private:
@@ -207,6 +216,8 @@ public:
     }
     ~Company()
     {
+        // for??
+        // - 0.1
         delete[] teams;
     }
     int getSize()const
@@ -230,13 +241,15 @@ public:
         for(int i = 0; i < getSize(); i++)
         {
             teams[i] = teams[i];
+            //what???
             teams[i] / size = n;
 
         }
         return n;
     }
 };
-
+// ....
+// - 0.7
 
 int main()
 {
@@ -244,3 +257,5 @@ int main()
 
  return 0;
 }
+
+//4.2

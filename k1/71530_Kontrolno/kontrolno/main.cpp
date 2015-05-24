@@ -157,6 +157,7 @@ public:
     {
         if(size == capacity)
         {
+            // could do with only one new :)
             Programmer* tmp = new Programmer[capacity];
             assert(tmp!=NULL);
             for(int i=0;i<size;i++)
@@ -178,6 +179,7 @@ public:
         size++;
         sort();
     }
+    // function with the main functionality could be usefull here
     void addProgrammer(Programmer& p)
     {
         if(size == capacity)
@@ -427,3 +429,5 @@ int main()
     cout<<"Average IQ: "<<Microsoft.averageIQ();
     return 0;
 }
+
+//6.00

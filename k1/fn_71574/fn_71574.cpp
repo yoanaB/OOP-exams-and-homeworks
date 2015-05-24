@@ -196,6 +196,7 @@ public:
         }
     }
 
+    // Expected type programmer but whatever
     Programmer* getProgrammer(char* name)
     {
         int index = getProgrammerIndexByName(name);
@@ -415,3 +416,5 @@ int main()
 
     return 0;
 }
+//nice 
+// 6.00

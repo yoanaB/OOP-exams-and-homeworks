@@ -68,11 +68,15 @@ void Programmer::del()
 {
 	delete[] name;
 }
+// noooo 
+// - 0.2
 int Programmer::operator==(int iq)
 {
 	if (this->iq == iq )
 		return iq;
 }
+// oh god 
+// - 0.2 
 int Programmer::operator<(int iq)
 {
 	if (this->iq < iq)
@@ -81,6 +85,7 @@ int Programmer::operator<(int iq)
 	}
 		return iq;
 }
+// ....
 int Programmer::operator>(int iq)
 {
 	if (this->iq > iq)
@@ -118,6 +123,7 @@ Programmer Team::getProgrammer(unsigned iq) const
 {
 	for (unsigned i = 0; i < size; i++)
 	{
+		//name should be uniq
 		if (programmers[i].getIQ() == iq)
 		{
 			return programmers[i];
@@ -154,6 +160,7 @@ void Team::addProgrammer(const Programmer& programmer)
 }
 void Team::removeProgrammer(unsigned iq)
 {
+	// not very good but whateveer..
 	for (unsigned i = 0; i < size; i++)
 	{
 		if (programmers[i].getIQ() == iq)
@@ -230,6 +237,11 @@ void Company::print()
 		cout << endl;
 	}
 }
+
+// operator = missing
+// - 0.5
+// no average iq 
+// - 0.3
 void main()
 {
 	Programmer c;
@@ -239,3 +251,5 @@ void main()
 	c.print();
 	system("pause");
 }
+
+//4.8

@@ -84,6 +84,7 @@ public:
 	}
 	bool operator ==(const Programmer & other)
 	{
+
 		return this->getIq() == other.getIq();
 	}
 	bool operator >(const Programmer & other)
@@ -111,6 +112,9 @@ public:
 	}
 	Team(Programmer * programmers = NULL, int count = 0, int size = 0)
 	{
+		//wut?? copy programmers?
+		// - 0.1
+
 		this->programmers = new Programmer[size];
 		assert(programmers);
 		this->size = size;
@@ -119,6 +123,7 @@ public:
 	~Team()
 	{
 		delete[]programmers;
+		// no need:
 		this->size = 0;
 		this->count = 0;
 	}
@@ -128,6 +133,8 @@ public:
 		assert(programmers);
 		this->size = other.size;
 		this->count = other.count;
+		// to count may be:
+		// - 0.1
 		for (int i = 0; i < size; i++)
 		{
 			this->programmers[i] = other.programmers[i];
@@ -142,6 +149,7 @@ public:
 			assert(programmers);
 			this->size = other.size;
 			this->count = other.count;
+			// to count...
 			for (int i = 0; i < size; i++)
 			{
 				this->programmers[i] = other.programmers[i];
@@ -157,6 +165,9 @@ public:
 	{
 		return this->count;
 	}
+
+	//what?? ?? ?? 
+	//-0.3
 	void addProgrammer(Programmer p1)
 	{
 		this->programmers[this->count] = *programmers;
@@ -179,6 +190,8 @@ public:
 		}
 		count--;
 	}
+	// get should return programmer
+	// - 0.1
 	void getProgrammer(char* name)
 	{
 		for (int i = 0; i <count; i++)
@@ -196,6 +209,8 @@ public:
 			programmers[i].printProgrammer();
 		}
 	}
+
+	// mm....nope
 	void sortProgrammers()
 	{
 		int maxIq = 0;
@@ -217,6 +232,8 @@ public:
 		{
 			for ( int j = 0; j <other.count; j++)
 			{
+				// not exactly
+				// -0.1
 				isThere = false;
 				if (strcmp(this->programmers[i].getName(), other.programmers[j].getName()) == 0)
 				{
@@ -250,6 +267,8 @@ public:
 	{
 		for (int i = 0; i < countC; i++)
 		{
+			// + 1 ? // + i?
+			// - 0.1
 			delete[](teams+1);
 			this->sizeC = 0;
 			this->countC = 0;
@@ -274,6 +293,7 @@ public:
 			
 		}
 	}
+	// - 0.2 
 	/*int averageIq(const Company company)
 	{
 		int* avIQ;
@@ -307,3 +327,5 @@ int main()
 	system("pause");
 	return 0;
 }
+
+// 5.00

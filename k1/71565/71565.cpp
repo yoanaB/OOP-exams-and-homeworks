@@ -123,6 +123,9 @@ public:
     }
     Team &operator=(Team &other)
     {
+        // a = a??
+        // - 0.2
+        // if( ...)
         delete []programists;
         this->size=other.size;
         this->maxSize=other.maxSize;
@@ -142,6 +145,8 @@ public:
     }
     void removeProgrammer(char*name)
     {
+        // if ( size * 2 < maxSize) ??
+        // - 0 .2
         for(int i=0; i<size; i++)
         {
             if(programists[i].getName()==name)
@@ -167,8 +172,12 @@ public:
     void addProgrammer(Programmer a)
     {
         int counter=0;
+        // == ?? 
+        // - 0.1
         if(size=maxSize)
         {
+            // nope...
+            // - 0.2
             Programmer* oldProgramists=programists;
             delete[]programists;
             programists=new Programmer[size*2];
@@ -182,6 +191,8 @@ public:
     }
     Team &operator-=(Team &other)
     {
+        // what if other programist has more/less programers ??
+        // - 0.2
         for(int i=0; i<size; i++)
         {
             if(this->programists[i]==other.programists[i])
@@ -210,6 +221,7 @@ public:
             counter++;
             sum+=programists[i].getIQ();
         }
+        //counter == size ...
         return sum/counter;
     }
 };
@@ -229,6 +241,8 @@ public:
     }
     ~Company()
     {
+        // for ... 
+        // - 0.1
         delete []teams;
     }
     Company(const Company &other)
@@ -244,6 +258,8 @@ public:
     }
     Company &operator=(const Company &other)
     {
+
+        // if(...)
         delete []teams;
         this->size=other.size;
         this->maxSize=other.maxSize;
@@ -262,6 +278,7 @@ public:
             counter++;
             sum+=teams[i].averageTeamIQ();
         }
+        //counter == size??
         return sum/counter;
     }
     void printCompany()
@@ -277,3 +294,4 @@ int main()
 {
     return 0;
 }
+// 5.2 

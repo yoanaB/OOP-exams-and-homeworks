@@ -57,6 +57,7 @@ public:
 	}
 	Programmer(char* str = "default", int a = 0, double s = 0)
 	{
+		// no need.. it's a constructor...
 		if (name)
 		{
 			delete [] name;
@@ -71,7 +72,9 @@ public:
 	{
 		delete[] name;
 	}
-	 
+	// no operators , no = , no copy const 
+	// - 0.6
+
 
 };
 /*
@@ -88,6 +91,7 @@ class Team
 {
 private:
 	Programmer *list;
+	// max size? 
 	int count = 0;
 public:
 	Programmer Get_member(int &i)
@@ -96,6 +100,7 @@ public:
 	}
 	void Set_count(int a = 1)
 	{
+		// no 
 		count = a;
 	}
 	const int Get_count()
@@ -106,9 +111,12 @@ public:
 	{
 		for (int i = 0; i < count; i++)
 		{
+			// strcmp 
+			// - 0.2
 			if (list[i].Get_name() == name)
 			{
 				return list[i];
+				// why?
 				break;
 			}
 		}
@@ -196,6 +204,8 @@ public:
 		delete[] list;
 	}
 };
+// missing a lot 
+// - 0.7
 
 /*3) Да се дефинира клас Company, който съхранява масив от екипи(Теаm), като има следната функционалност :
 •	averageIq – намира средния коефициент на интелигентност на всички програмисти в компанията
@@ -236,6 +246,8 @@ public:
 		return (sum / a);
 	}
 };
+// a lot missing 
+// - 1.1
 int main()
 {
 	//Company FMI;
@@ -247,3 +259,4 @@ int main()
 	a.Print();
 	return 0;
 }
+// 3.4
