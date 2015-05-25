@@ -138,6 +138,7 @@ void Team::del()
 {
 	delete[] programmers;
 }
+// same extend as 71583
 void Team::extend()
 {
 	Programmer* oldProgrammers = programmers;

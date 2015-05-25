@@ -84,16 +84,20 @@ void Programmer::print()const
 {
     cout << name << " " << iq << " " << salary;
 }
+// else what?
+// - 0.2
 bool Programmer::operator>(const Programmer& other)
 {
     if(iq > other.iq)
         return true;
 }
+// ... 
 bool Programmer::operator<(const Programmer& other)
 {
     if(iq < other.iq)
         return true;
 }
+//...
 bool Programmer::operator==(const Programmer& other)
 {
     if(iq == other.iq)
@@ -166,6 +170,8 @@ void Team::removeProgrammer(const char* name)
 {
     for(int i = 0; i < size; i++)
     {
+        // strcmp? 
+        // - 0.1
         if(programmers[i].getName() == name)
         {
             for(int j = i+1; j < size; j++)
@@ -181,6 +187,7 @@ Programmer Team::getProgrammer(const char* name)
 {
     for(int i = 0; i < size; i++)
     {
+        //..
         if(programmers[i].getName() ==  name)
         {
             return programmers[i];
@@ -207,6 +214,7 @@ bool Team::contain(const Programmer* other, const char* name, int n)
 {
     for(int i = 0; i < n; i++)
     {
+        //...
         if(other[i].getName() == name)
             return true;
     }
@@ -216,6 +224,7 @@ int Team::getSize()const
 {
     return size;
 }
+// same as 71580
 void Team::extend()
 {
     Programmer* oldProgrammers = programmers;

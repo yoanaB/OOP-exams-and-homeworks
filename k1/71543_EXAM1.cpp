@@ -48,6 +48,7 @@ public:
         cout << "IQ: " << getIQ() << endl;
         cout << "Salary: " << getSalary() << endl;
     }
+    // Programmer& would be b
     bool operator<(Programmer arg){
         return (arg.getIQ() > this->getIQ());
     }
@@ -61,12 +62,13 @@ public:
         //delete[];
     }
 };
-
+// - 0.4 no copy constructor and destructor
 class Team{
 private:
     Programmer* programmers;
     int programmers_count;
 public:
+    // wut 
     Team(Programmer input){
         this->programmers = new Programmer();
         this->programmers[0] = input;
@@ -141,6 +143,8 @@ public:
 
     }*/
 };
+// not good, no dynamic memory...
+// - 1.0
 
 class Company{
 private:
@@ -193,7 +197,10 @@ public:
         //delete[] Company;
     }
 };
+// well ... the same 
+// - 1.0
 int main()
 {
     return 0;
 }
+// 3.6 

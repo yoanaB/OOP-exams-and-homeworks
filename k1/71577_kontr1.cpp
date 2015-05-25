@@ -111,6 +111,8 @@ public:
         Programmer newList[100];
         for(int i=0; i<size; i++)
         {
+            // strcmp
+            // - 0.1
             if(programmers[i].getName() != n)
             {
                 newList[i]= programmers[i];
@@ -138,6 +140,7 @@ public:
     }
     Team ()
     {
+        //wuut??
         {
             this->programmers=new Programmer[size+1];
             assert(this->programmers != NULL);
@@ -149,6 +152,8 @@ public:
     }
 
 };
+//.... no dynamic memory, missing a lot of other imporant things
+// - 1.0
 class Company
 {
     double averageIq()
@@ -156,3 +161,6 @@ class Company
         double avg;
 
 };
+// - 1.5
+
+// 3.4
