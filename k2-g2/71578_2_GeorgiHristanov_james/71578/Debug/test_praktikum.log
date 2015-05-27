@@ -1,0 +1,20 @@
+﻿Build started 4/29/2015 5:07:29 PM.
+     1>Project "c:\Users\grade\documents\visual studio 2013\Projects\test_praktikum\test_praktikum.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt RockStar.cpp
+         RockStar.cpp
+     1>c:\users\grade\documents\visual studio 2013\projects\test_praktikum\rockstar.cpp(72): warning C4172: returning address of local variable or temporary
+     1>c:\users\grade\documents\visual studio 2013\projects\test_praktikum\rockstar.cpp(84): warning C4172: returning address of local variable or temporary
+     1>c:\users\grade\documents\visual studio 2013\projects\test_praktikum\rockstar.cpp(133): error C3867: 'RockStar::getName': function call missing argument list; use '&RockStar::getName' to create a pointer to member
+     1>c:\users\grade\documents\visual studio 2013\projects\test_praktikum\rockstar.cpp(149): error C3867: 'RockStar::getName': function call missing argument list; use '&RockStar::getName' to create a pointer to member
+     1>c:\users\grade\documents\visual studio 2013\projects\test_praktikum\rockstar.cpp(151): error C2059: syntax error : '&'
+     1>c:\users\grade\documents\visual studio 2013\projects\test_praktikum\rockstar.cpp(160): error C2039: 'i' : is not a member of 'Band'
+                 c:\users\grade\documents\visual studio 2013\projects\test_praktikum\band.h(5) : see declaration of 'Band'
+     1>c:\users\grade\documents\visual studio 2013\projects\test_praktikum\rockstar.cpp(162): error C3867: 'RockStar::getName': function call missing argument list; use '&RockStar::getName' to create a pointer to member
+     1>c:\users\grade\documents\visual studio 2013\projects\test_praktikum\rockstar.cpp(163): error C3867: 'RockStar::getAwesomeness': function call missing argument list; use '&RockStar::getAwesomeness' to create a pointer to member
+     1>c:\users\grade\documents\visual studio 2013\projects\test_praktikum\rockstar.cpp(164): error C3867: 'RockStar::getNumberOfFans': function call missing argument list; use '&RockStar::getNumberOfFans' to create a pointer to member
+     1>Done Building Project "c:\Users\grade\documents\visual studio 2013\Projects\test_praktikum\test_praktikum.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.35

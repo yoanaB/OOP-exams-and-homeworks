@@ -288,7 +288,8 @@ public:
         delete [] smt;
     }
 
-
+    // not exactly 
+    // - 0.2
     Team &operator -= (const Team& other)
     {
         Programmer* tmp = new Programmer [max_size];
@@ -345,7 +346,8 @@ public:
         }
         return result1/real_size_company;
     }
-
+    // missing opr = copy const
+    // - 0.3
     ~Company ()
     {
          for (int i = 0; i < real_size_company; i++)
@@ -405,3 +407,5 @@ int main ()
     return 0;
 
 }
+
+// 5.5
