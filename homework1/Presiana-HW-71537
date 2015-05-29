@@ -1,0 +1,513 @@
+//Header HEX
+#ifndef HEX_H
+#define HEX_H
+
+class Hex
+{
+public:
+	Hex (char*, int);
+	Hex (const Hex&);
+	~Hex();
+	Hex& operator= (const Hex&);
+	void setNumber (char*);
+	char* getNumber () const;
+	double makeDec ();
+	void print () const;
+	bool operator== (const Hex&);
+	bool operator > (const Hex&);
+	bool operator < (const Hex&);
+	Hex& operator + (const Hex&);
+	Hex& operator - (const Hex&);
+	Hex& operator * (const Hex&);
+	Hex& operator / (const Hex&);
+private:
+	char* number;
+	int realSize; 
+	static int max;
+	void cpy (const Hex& a)
+	{
+		this-> number = new char [strlen(a.number) + 1];
+		assert (this->number);
+		strcpy_s (this-> number, strlen (a.number) + 1, a.number);
+
+		this-> realSize = a.realSize; 
+	}
+	void del ()
+	{
+		delete [] number;
+	}
+};
+
+#endif
+
+// source HEX
+#include <iostream>
+#include <cassert>
+#include <cstring>
+#include <cmath>
+#include "hex.h"
+using namespace std;
+
+int Hex :: max = 100;
+
+Hex :: Hex (char* number = "0", int realSize = 2)
+{
+	this->number = new char [strlen (number)+1];
+	assert (this->number);
+	strcpy_s (this-> number, strlen(number)+1,number);
+	this-> realSize = realSize;
+}
+Hex::Hex (const Hex& a)
+{ 
+	cpy (a);
+}
+
+Hex :: ~Hex ()
+{
+	del();
+}
+Hex& Hex:: operator= (const Hex& a)
+{
+	if (this != &a)
+	{
+		del();
+		cpy(a);
+	}
+	return *this;
+}
+void Hex :: setNumber (char* n)
+{
+	this->number = new char [strlen (n)+1];
+	assert (this->number);
+	strcpy_s (this->number, strlen(n)+1, n);
+}
+char* Hex :: getNumber () const
+{
+	return number;
+}
+double Hex :: makeDec () 
+{
+	double decimal = 0;
+        for (int i = 0; i < realSize; i++)
+        {
+            if ((number[i] >= 'A' && number[i] <= 'F') || (number[i] >= '1' && number[i] <= '9' ))
+            {
+                int tmp = 0;
+                switch (number[i])
+                {
+                    case 'A': tmp = 10; break;
+                    case 'B': tmp = 11; break;
+                    case 'C': tmp = 12; break;
+                    case 'D': tmp = 13; break;
+                    case 'E': tmp = 14; break;
+                    case 'F': tmp = 15; break;
+                    case '1': tmp = 1; break;
+                    case '2': tmp = 2; break;
+                    case '3': tmp = 3; break;
+                    case '4': tmp = 4; break;
+                    case '5': tmp = 5; break;
+                    case '6': tmp = 6; break;
+                    case '7': tmp = 7; break;
+                    case '8': tmp = 8; break;
+                    case '9': tmp = 9; break;
+                }
+                decimal += tmp * (pow(16,double( i)));
+            }
+        }
+        return decimal;
+    }
+}
+void Hex :: print() const
+{
+	cout << "The number is: "<< number<< endl;
+}
+bool Hex :: operator== (const Hex& a)
+{
+	return makeDec(this->getNumber())==makeDec(a.getNumber()));
+}
+bool Hex :: operator > (const Hex& a)
+{
+	return makeDec(this->getNumber()) > makeDec(a.getNumber());
+}
+bool Hex :: operator < (const Hex& a)
+{
+	return makeDec(this->getNumber()) < makeDec(a.getNumber());
+}
+Hex& Hex:: operator+ (const Hex& a)
+{
+	return makeDec(this->getNumber()) + makeDec(a.getNumber());
+}
+Hex& Hex:: operator- (const Hex& a)
+{
+	return makeDec(this->getNumber()) - makeDec(a.getNumber());
+}
+Hex& Hex:: operator* (const Hex& a)
+{
+	return makeDec(this->getNumber()) * makeDec(a.getNumber());
+}
+Hex& Hex:: operator/ (const Hex& a)
+{
+	return makeDec(this->getNumber()) / makeDec(a.getNumber());
+}
+
+// Header Zodia
+#ifndef ZODIA_H
+#define ZODIA_H
+
+struct Date
+{
+public: 
+	Date();
+	void setDate (int,int,int);
+	int getDay () const;
+	int getMonth () const;
+	int getYear () const;
+    void print () const;
+	bool isLeap() const;
+	bool isValid () const;
+	Date& operator = ( const Date&);
+private:
+	int day;
+	int month;
+	int year;
+	void cpy (const Date& a)
+	{
+		this->day = a.getDay();
+		this->month = a.getMonth();
+		this->year = a.getYear();
+	}
+	
+};
+
+class Person
+{
+public:
+	Person ();
+	~Person ();
+	Person (const Person&);
+	Person& operator= (const Person&);
+	void setDate (const Date&);
+	Date getDate () const;
+	void setName (char*);
+	char* getName () const;
+private:
+	char* lastName;
+	Date birthday;
+	void cpy (const Person& a)
+	{
+		this-> lastName = new char[strlen(a.getName()) + 1];
+		assert(this->lastName);
+		strcpy_s(this->lastName, strlen(lastName) + 1, a.getName());
+
+		this->birthday =a.getDate();
+	}
+	void del()
+	{
+		delete [] lastName;
+	}
+};
+
+class ListPerson
+{
+public:
+	ListPerson ();
+	~ListPerson();
+	ListPerson (const ListPerson&);
+	ListPerson& operator= (const ListPerson&);
+	int getCount() const;
+	void addPerson(const Person&);
+	void deletePerson(char*);
+	Person* getPerson(char*);
+	ListPerson& unionList(const ListPerson&);
+	ListPerson& sectionList(const ListPerson&);
+	ListPerson& differenceList(const ListPerson&);
+private:
+	Person* list;
+	int size;
+	int count;
+	void cpy(const ListPerson& a)
+	{
+		this->size = a.size;
+		this->count = a.count;
+		for (int i = 0; i < a.size; i++)
+		{
+			list[i] = a.list[i];
+		}
+	}
+	void del ()
+	{
+		delete [] list;
+	}
+};
+
+#endif
+
+//Source Zodia
+#include <iostream>
+#include<cassert>
+#include<cstring>
+#include "zodia.h"
+using namespace std;
+
+Date::Date()
+{
+	this->day = 1;
+	this->month = 1;
+	this->year = 2000;
+}
+
+void Date::setDate(int day, int month, int year)
+{
+	this->day = day;
+	this->month = month;
+	this->year = year;
+}
+
+int Date::getMonth() const
+{
+	return month;
+}
+
+int Date::getDay() const
+{
+	return day;
+}
+
+int Date:: getYear() const
+{
+	return year;
+}
+
+void Date::print() const
+{
+	cout << getDay() << "/" << getMonth() << "/" << getYear();
+}
+
+bool Date::isLeap() const
+{
+	return (year % 4 == 0 && year % 100 != 0 || year % 400 == 0);
+}
+
+bool Date::isValid() const
+{
+	if ((getDay() >= 1 && getDay() <= 31) && (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12))
+		return true;
+	else if ((getDay() >= 1 && getDay() <= 29) && isLeap())
+		return true;
+	if ((getDay() >= 1 && getDay() <= 30) && (month == 2 || month == 4 || month == 6 || month == 9 || month == 11))
+		return true;
+	else 
+		return false;
+}
+
+Date& Date :: operator= (const Date& a)
+{
+	cpy(a);
+}
+
+Person::Person()
+{
+	char* lastName = "";
+	Date date();
+}
+
+Person :: ~Person()
+{
+	del();
+}
+
+Person::Person(const Person& a)
+{
+	cpy(a);
+}
+Person& Person :: operator= (const Person& a)
+{
+	if(this != &a)
+	{
+		del ();
+		cpy (a);
+	}
+	return *this;
+}
+void Person::setName(char* a)
+{
+	del();
+	this->lastName = new char[strlen(a) + 1];
+	assert(this->lastName);
+	strcpy_s(this->lastName, strlen(a) + 1, a);
+}
+
+char* Person::getName() const
+{
+	return lastName;
+}
+
+void Person::setDate(const Date& a)
+{	
+	this->birthday = a;
+}
+
+Date Person::getDate() const
+{
+	return birthday;
+}
+
+ListPerson :: ListPerson()
+{
+	int size = 1;
+	int count = 0;
+}
+
+ListPerson :: ~ListPerson()
+{
+	del();
+}
+
+ListPerson::ListPerson(const ListPerson& a)
+{
+	cpy(a);
+}
+
+ListPerson& ListPerson :: operator= (const ListPerson& a)
+{
+	if (this != &a)
+	{
+		del ();
+		cpy(a);
+	}
+	return *this;
+}
+
+void ListPerson::addPerson(const Person& a)
+{
+	if (count == size)
+	{
+		size *= 2;
+		Person* temp = new Person[count];
+		assert(temp);
+		for (int i = 0; i < count; i++)
+		{
+			temp[i] = list[i];
+		}
+		delete[] list;
+		list = new Person[size];
+		for (int i = 0; i < count; i++)
+		{
+			list[i] = temp[i];
+		}
+		delete[] temp;
+	}
+	list[count] = a;
+}
+
+void ListPerson::deletePerson(char* a)
+{
+	for (int i = 0; i < count; i++)
+	{
+		if (strcmp(this->list[i].getName(), a) == 0)
+		{
+			for (int j = i; j < count - 1; j++)
+			{
+				list[i] = list[i + 1];
+			}
+		}
+	}
+}
+
+Person* ListPerson::getPerson(char* a)
+{
+	bool person = false;
+	int i;
+	for (i = 0; i < count; i++)
+	{
+		if (strcmp(list[i].getName(), a) == 0)
+		person = true;
+	}
+	if (person) 
+		return &list[i];
+	else return NULL;
+}
+
+int ListPerson::getCount() const
+{
+	return count;
+}
+
+ListPerson& ListPerson::unionList(const ListPerson& lp)
+{
+	int newSize = this->getCount() + lp.getCount();
+	Person* temp = new Person[newSize];
+	for (int i = 0; i < this->getCount(); i++)
+	{
+		temp[i] = list[i];
+	}
+	for (int j = this->getCount(); j < newSize; j++)
+	{
+		for (int k = 0; k < lp.getCount(); k++)
+		{
+			temp[j] = lp.list[k];
+		}
+	}
+	delete[] this->list;
+	delete[] lp.list;
+	list = new Person[newSize];
+	for (int i = 0; i < newSize; i++)
+	{
+		list[i] = temp[i];
+	}
+	delete[] temp;
+	return *this;
+}
+
+ListPerson& ListPerson::sectionList(const ListPerson& list)
+{
+	int maxSize;
+	if (getCount() > list.getCount()) maxSize = getCount();	
+	else
+		maxSize = list.getCount();
+	Person* temp = new Person[maxSize];
+	for (int i = 0; i < getCount(); i++)
+	{
+		for (int j = 0; j < list.getCount(); j++)
+		{
+			if (strcmp(this->list[i].getName(), list.list[j].getName()) == 0)
+			{
+				temp[i] = list.list[j];
+				count++;
+			}
+		}
+	}
+	delete[] this->list;
+	Person* list = new Person[count];
+	for (int i = 0; i < count; i++)
+	{
+		this->list[i] = temp[i];
+	}
+	delete[] temp;
+	return *this;
+}
+
+ListPerson& ListPerson::differenceList(const ListPerson& list)
+{
+	Person* temp = new Person[getCount()];
+	for (int i = 0; i < getCount(); i++)
+	{
+		for (int j = 0; j < list.getCount(); j++)
+		{
+			if (strcmp(this->list[i].getName(), list.list[j].getName()) != 0)
+			{
+				temp[i] = this->list[i];
+				count++;
+			}
+		}
+	}
+	delete[] this->list;
+	Person* list = new Person[count];
+	for (int i = 0; i < count; i++)
+	{
+		this->list[i] = temp[i];
+	}
+	delete[] temp;
+	return *this;
+}
+
