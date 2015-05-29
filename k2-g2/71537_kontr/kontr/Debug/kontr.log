@@ -1,0 +1,11 @@
+﻿Build started 4/29/2015 4:53:09 PM.
+     1>Project "c:\Users\grade\documents\visual studio 2013\Projects\kontr\kontr\kontr.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\grade\documents\visual studio 2013\projects\kontr\kontr\main.cpp(15): error C2040: 'a' : 'Band *' differs in levels of indirection from 'RockStar'
+     1>Done Building Project "c:\Users\grade\documents\visual studio 2013\Projects\kontr\kontr\kontr.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.33

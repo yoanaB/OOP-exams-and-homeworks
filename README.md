@@ -39,3 +39,12 @@ K1 - Group 2: </br>
 71547 2.50 </br>
 71540 5.60 </br>
 71590 5.80 </br>
+71548 4.40 </br>
+71537 4.30 !! </br>
+71593 5.60 </br>
+
+</br> </br>
+
+<strong>
+71468 and 71514 are not in the list for the exam of OOP-practice. They should speak with Magdalina Todorova or to check what's going on in Students Department.
+</strong>
