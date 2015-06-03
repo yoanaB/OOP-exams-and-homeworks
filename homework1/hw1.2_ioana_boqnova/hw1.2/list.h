@@ -7,6 +7,9 @@ public:
 	Date();
 	void setDate(int, int, int);
 	int getMonth() const;
+	void setDay(int);
+	void setMonth(int);
+	void makeD(int, int);
 	int getDay() const;
 	int getYear() const;
 	void print() const;
@@ -35,6 +38,20 @@ private:
 	Date birthDate;
 };
 
+struct Zodiak
+{
+	char* name;
+	Date start;
+	Date end;
+	void setName(char*);
+	const char* getName() const;
+	void setStart(const Date&);
+	Date getStart() const;
+	void setEnd(const Date&);
+	Date getEnd() const;
+	void update(char*, int, int, int, int);
+};
+
 class ListPerson
 {
 public:
@@ -49,24 +66,13 @@ public:
 	ListPerson& unionList(const ListPerson&);
 	ListPerson& sectionList(const ListPerson&);
 	ListPerson& differenceList(const ListPerson&);
+	void getZodia(char*);
 	void print();
 private:
 	Person* list;
+	Zodiak z[12];
 	int size;
 	int count;
-};
-
-struct Zodiak
-{
-	char* name;
-	Date start;
-	Date end;
-	void setName(char*);
-	char* getName() const;
-	void setStart(const Date&);
-	Date getStart() const;
-	void setEnd(const Date&);
-	Date getEnd() const;
 };
 
 #endif
