@@ -8,19 +8,23 @@ public:
 	~HNumber();
 	HNumber(const HNumber&);
 	HNumber& operator=(const HNumber&);
+	HNumber(char*);
 	void setNumber(char*);
-	char* getNumber() const;
+	const char* getNumber() const;
 	void read();
 	void print() const;
+	int convertInInt(char*);
+	char* convertInChar(int);
 	bool operator== (const HNumber&);
-	bool operator> (const HNumber&);
-	bool operator< (const HNumber&);
-	bool operator<= (const HNumber&);
-	bool operator>= (const HNumber&);
-	HNumber& operator+ (const HNumber&);
-	HNumber& operator- (const HNumber&);
-	HNumber& operator* (const HNumber&);
-	HNumber& operator/ (const HNumber&);
+	bool operator> ( HNumber&);
+	bool operator< ( HNumber&);
+	bool operator<= ( HNumber&);
+	bool operator>= ( HNumber&);
+	HNumber& operator+ ( HNumber&);
+	HNumber& operator- ( HNumber&);
+	HNumber& operator* ( HNumber&);
+	HNumber& operator/ ( HNumber&);
+	HNumber& operator% (HNumber&);
 private:
 	char* number;
 };
@@ -38,7 +42,7 @@ public:
 private:
 	HNumber* hex;
 	int count;
-	int size;
+	int maxSize = 100;
 };
 
 #endif
