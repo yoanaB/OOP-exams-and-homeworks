@@ -1,18 +1,34 @@
-/*Задача 2. Визитка на човек съдържа фамилията и датата на раждането му.
-Реализирана е чрез структура. Да се дефинира клас ListPerson за работа с
-картотека от визитки. Класът да съдържа масив от визитки на хора. Да се
-реализират методи за добавяне и изтриване на визитка, а също за достъп до
-визитка по указана фамилия. Фамилиите в масива трябва да са уникални.
-Да се реализират операции за обединяване на две картотеки, за намиране
-на сечението и на разликата на две картотеки. Да се дефинира метод, който
-по зададена фамилия намира зодията на човека. За целта в класа да се дефинира
-и масив от структури Zodiac с полета: название на знака на зодиака, дата на
-началото и дата на края му. Да се реализират два варианта на класа:
-с обикновен масив и със статичен масив.
-*/
 #ifndef LIST_H
 #define LIST_H
 #include "Card.h"
+
+struct Zodiac {
+public:
+	void setName(char*);
+	void setStartDay(int);
+	void setStartMonth(int);
+	void setFinalDay(int);
+	void setFinalMonth(int);
+	Zodiac(char*, int, int, int, int);
+	char* getName()const;
+	void print()const;
+	int getStartDay();
+	int getStartMonth();
+	int getFinalDay();
+	int getFinalMonth();
+
+	Zodiac() {
+		name = new char[1];
+		name[0] = '\0';
+		startDay=0, startMonth=0, finalDay=0, finalMonth = 0;
+	}
+private:
+	char*name;
+	int startDay;
+	int startMonth;
+	int finalDay;
+	int finalMonth;
+};
 
 class ListPerson
 {
@@ -31,10 +47,14 @@ public:
 	ListPerson& removeSame(const ListPerson&);
 	void print()const;
 	bool Unique(char*);
+	void readZodiac();
+	void printZodiacs();
+	void getZodiac(char*);
 private:
 	Card* cards;
 	int size;
 	int capacity;
-
+	Zodiac* zod;
+	int zodiacSize;
 };
 #endif
