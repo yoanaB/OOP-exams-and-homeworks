@@ -6,7 +6,7 @@ K1 - Group 1: </br>
 71594 K1 5.00 </br>
 71530 K1 6.00 </br>
 71565 K1 5.20 </br>
-71568 K1 3.40 </br>
+71568 K1 3.40 D1 later K2 3.40 D2 waiting </br>
 71580 K1 4.80  </br>
 71559 K1 3.00 </br>
 71574 K1 2.00 cheater with 855255 so ( was 6.00) D1: Later  K2 5.60 D2: waiting  </br>
@@ -21,7 +21,7 @@ K1 - Group 1: </br>
 71550 K1 5.60 </br>
 71589 K1 5.00 </br>
 71553 K1 5.70 </br>
-71542 K1 4.00 D1: later K1: 3.40 D2: waiting </br>
+71542 K1 4.00 D1 later K2 3.40 D2 waiting </br>
 
 
 K1 - Group 2: </br>
@@ -45,7 +45,7 @@ K1 - Group 2: </br>
 71547 K1 2.50 </br>
 71540 K1 5.60 </br>
 71590 K1 5.80 </br>
-71548 K1 4.40 D1 2.00 K2 4.70 D2: In america. Final: 4.00 </br>
+71548 K1 4.40 D1 2.00 K2 4.70 D2: In america. <strong>Final: 4.00</strong> </br>
 71537 K1 4.30 </br>
 71593 K1 5.60 </br>
 
