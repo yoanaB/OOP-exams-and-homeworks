@@ -31,9 +31,9 @@ K1 - Group 2: </br>
 71557 K1 5.25 </br>
 71560 K1 4.50 </br>
 71566 K1 2.50 </br>
-71569 K1 6.00 </br>
+71569 K1 6.00 D1:later K2 4.30 D2 waiting</br>
 71572 K1 5.00 </br>
-71575 K1 3.00 </br>
+71575 K1 3.00 D1: later K2 3.00 D2: waiting </br>
 71578 K1 4.00 </br>
 71584 K1 3.00 </br>
 71563 K1 5.25 </br>
@@ -45,9 +45,9 @@ K1 - Group 2: </br>
 71547 K1 2.50 </br>
 71540 K1 5.60 </br>
 71590 K1 5.80 </br>
-71548 K1 4.40 D1 2.00 K2 4.70 D2: In america. <strong>Final: 4.00</strong> </br>
-71537 K1 4.30 </br>
-71593 K1 5.60 </br>
+71548 K1 4.40 D1 5.00 K2 4.70 D2: In america. <strong>Final: 5.00</strong> </br>
+71537 K1 4.30 D1 later K2 4.90 D2 waiting</br>
+71593 K1 5.60 D1 later K2 5.10 D2 waiting </br>
 
 </br> </br>
 

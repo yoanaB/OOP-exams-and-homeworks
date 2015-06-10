@@ -1,0 +1,68 @@
+# depslib dependency file v1.0
+1433949490 source:c:\users\grade\desktop\10.6.2015\71593\main.cpp
+	<iostream>
+	"Targaryen_Stark.h"
+	"Conscript_army.h"
+	"Paid_army.h"
+
+1433944693 source:c:\users\grade\desktop\10.6.2015\71593\src\human.cpp
+	<iostream>
+	<cstring>
+	"Human.h"
+
+1433947049 c:\users\grade\desktop\10.6.2015\71593\include\human.h
+
+1433944750 source:c:\users\grade\desktop\10.6.2015\71593\src\normal_human.cpp
+	<iostream>
+	<cstring>
+	"Normal_Human.h"
+
+1433944750 c:\users\grade\desktop\10.6.2015\71593\include\normal_human.h
+	<Human.h>
+
+1433945442 source:c:\users\grade\desktop\10.6.2015\71593\src\army.cpp
+	<iostream>
+	"Army.h"
+
+1433946225 c:\users\grade\desktop\10.6.2015\71593\include\army.h
+	"Human.h"
+
+1433946187 source:c:\users\grade\desktop\10.6.2015\71593\src\paid_army.cpp
+	<iostream>
+	<cstring>
+	"Paid_army.h"
+
+1433946237 c:\users\grade\desktop\10.6.2015\71593\include\paid_army.h
+	"Army.h"
+
+1433946757 source:c:\users\grade\desktop\10.6.2015\71593\src\conscript_army.cpp
+	<iostream>
+	<cstring>
+	"Conscript_army.h"
+
+1433946755 c:\users\grade\desktop\10.6.2015\71593\include\conscript_army.h
+	<Army.h>
+
+1433949147 source:c:\users\grade\desktop\10.6.2015\71593\src\targaryen.cpp
+	<iostream>
+	<cstring>
+	"Targaryen.h"
+
+1433949534 c:\users\grade\desktop\10.6.2015\71593\include\targaryen.h
+	<Human.h>
+
+1433949275 source:c:\users\grade\desktop\10.6.2015\71593\src\stark.cpp
+	<iostream>
+	<cstring>
+	"Stark.h"
+
+1433949534 c:\users\grade\desktop\10.6.2015\71593\include\stark.h
+	<Human.h>
+
+1433948136 source:c:\users\grade\desktop\10.6.2015\71593\src\targaryen_stark.cpp
+	"Targaryen_Stark.h"
+
+1433949534 c:\users\grade\desktop\10.6.2015\71593\include\targaryen_stark.h
+	"Stark.h"
+	"Targaryen.h"
+
