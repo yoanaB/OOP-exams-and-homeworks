@@ -4,6 +4,7 @@
 #include <cstring>
 #include <cassert>
 
+// wut??
 class NormalHuman{
 protected:
     char* name;
@@ -99,10 +100,12 @@ public:
         delete[] this->name;
     }
 };
-
+ // - 0.2
 class Army {
 protected:
     Human* warriors[100];
+    // no?
+    // - 0.1
     char* leader;
     int warriorsNum;
     void init(char* leader, int warriorsNum = 0, Human* const* warriors = NULL) {
@@ -128,6 +131,8 @@ protected:
     double salary;
     void init(int budget, int salary)
     {
+        // no 
+        // - 0.2
         this->budget = budget;
         this->salary = salary;
     }
@@ -161,7 +166,8 @@ public:
 
 };
 
-
+// a lot of missing stuffs 
+// - 0 .5
 class ConscriptArmy : virtual public Army {
 
 
@@ -195,3 +201,4 @@ public:
 };
 
 
+// - 2.2
