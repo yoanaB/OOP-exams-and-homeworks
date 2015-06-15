@@ -1,0 +1,167 @@
+//Inheritance
+//Abstraction
+//Encapsulation
+//Polymorphism
+
+#include <iostream>
+#include <string.h>
+#include <assert.h>
+#include <math.h>
+
+class Musical_skill
+{
+public:
+	Musical_skill(char* n, int u)
+	{
+		this->name = new char[strlen(name) + 1];
+		assert(this->name != NULL);
+		strcpy(this->name, n);
+		this->umenie = u;
+	}
+	~Musical_skill()
+	{
+		delete[] this->name;
+	}
+	Musical_skill(const Musical_skill& other)
+	{
+		this->name = new char[strlen(other.name) + 1];
+		assert(this->name != NULL);
+		strcpy(this->name, other.name);
+		this->umenie = other.umenie;
+	}
+	Musical_skill& operator=(const Musical_skill &other)
+	{
+		if (&other != *this)
+		{
+			delete[] this->name;
+			this->name = new char[strlen(other.name) + 1];
+			assert(this->name != NULL);
+			strcpy(this->name, other.name);
+			this->umenie = other.umenie;
+		}
+	}
+private:
+	char* name;
+	int umenie;
+};
+
+//why???
+class Musician : public Musical_skill
+{
+	Musician(char* _ime, int _krasota, int _poroci, char* _tip_muzikant)
+	{
+		this->ime = new char[strlen(ime) + 1];
+		assert(this->ime != NULL);
+		strcpy(ime, _ime);
+		krasota = _krasota;
+		poroci = _poroci;
+		tip_muzikant = _tip_muzikant;
+	}
+	~Musician()
+	{
+		delete[] ime;
+	}
+	void set_ime(char* _ime)
+	{
+		this->ime = new char[strlen(ime) + 1];
+		assert(this->ime != NULL);
+		strcpy(ime, _ime);
+	}
+	char* get_name() const
+	{
+		return ime;
+	}
+protected:
+// ??
+	virtual int krasota() = 0;
+	virtual int poroci() const = 0;
+	virtual char* tip_muzikant() = 0;
+private:
+	char* ime;
+};
+
+
+class Rock_Musician : public Musician
+{
+	Rock_Musician(char* _ime)
+	{
+		this->ime = new char[strlen(ime) + 1];
+		assert(this->ime != NULL);
+		strcpy(this->ime, _ime);
+	}
+	~Rock_Musician
+	{
+		delete[] this->ime;
+	}
+		Rock_Musician(const Rock_Musician& other)
+	{
+		this->ime = new char[strlen(other.ime) + 1];
+		assert(this->ime != NULL);
+		strcpy(this->ime, other.ime);
+	}
+	Musical_skill& operator=(const Rock_Musician &other)
+	{
+		if (&other != *this)
+		{
+			delete[] this->ime;
+			this->ime = new char[strlen(other.ime) + 1];
+			assert(this->ime != NULL);
+			strcpy(this->ime, other.ime);
+		}
+	}
+	virtual int krasota()
+	{
+		return this->Math.pow(krasota, 2) - 3 * poroci*3.14;
+	}
+	virtual int poroci() const
+	{
+		return poroci;
+	}
+	virtual char* tip_muzikant()
+	{
+		return "rock";
+	}
+};
+
+
+class Chalga_Musician : public Musician
+{
+	Chalga_Musician(char* _ime)
+	{
+		this->ime = new char[strlen(ime) + 1];
+		assert(this->ime != NULL);
+		strcpy(this->ime, _ime);
+	}
+	~Chalga_Musician
+	{
+		delete[] this->ime;
+	}
+		Chalga_Musician(const Rock_Musician& other)
+	{
+		this->ime = new char[strlen(other.ime) + 1];
+		assert(this->ime != NULL);
+		strcpy(this->ime, other.ime);
+	}
+	Chalga_skill& operator=(const Rock_Musician &other)
+	{
+		if (&other != *this)
+		{
+			delete[] this->ime;
+			this->ime = new char[strlen(other.ime) + 1];
+			assert(this->ime != NULL);
+			strcpy(this->ime, other.ime);
+		}
+	}
+	virtual int krasota()
+	{
+		return this->Math.pow(krasota, 5) - 3 + poroci + rasa * Math.cos();
+	}
+	virtual int poroci() const
+	{
+		return poroci;
+	}
+	virtual char* tip_muzikant()
+	{
+		return "rock_tack";
+	}
+};
