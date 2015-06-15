@@ -8,7 +8,7 @@ K1 - Group 1: </br>
 71565 K1 5.20 </br>
 71568 K1 3.40 D1 later K2 3.40 D2 waiting </br>
 71580 K1 4.80 D1 later K2 3.50 D2 waiting</br>
-71559 K1 3.00 K@ 2.00 </br>
+71559 K1 3.00 K2 2.00 </br>
 71574 K1 2.00 cheater with 855255 so ( was 6.00) D1: Later  K2 5.60 D2: waiting  </br>
 71592 K1 4.20 </br>
 855255 K1 2.00 ( cheater with 71574) </br>
