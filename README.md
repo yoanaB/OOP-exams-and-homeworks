@@ -4,7 +4,7 @@ Results from homeworks and exams
 
 K1 - Group 1: </br>
 71594 K1 5.00 </br>
-71530 K1 6.00 D1 later K2 4.70 D2 waiting </br>
+71530 K1 6.00 D1 later K2 5.00 D2 waiting </br>
 71565 K1 5.20 </br>
 71568 K1 3.40 D1 later K2 3.40 D2 waiting </br>
 71580 K1 4.80 D1 later K2 3.50 D2 waiting</br>
@@ -14,9 +14,9 @@ K1 - Group 1: </br>
 855255 K1 2.00 ( cheater with 71574) </br>
 71543 K1 3.60 </br>
 71577 K1 3.40 </br>
-71583 K1 5.70 </br>
+71583 K1 5.70 D1 later K2 3.00 D2 waiting</br>
 71595 K1 5.80 </br>
-71533 K1 5.50 </br>
+71533 K1 5.50 D1 later K2 5.50 D2: waiting </br>
 71586 K1 4.50 </br>
 71550 K1 5.60 </br>
 71589 K1 5.00 </br>

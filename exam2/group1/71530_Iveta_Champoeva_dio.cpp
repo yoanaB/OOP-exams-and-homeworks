@@ -84,8 +84,7 @@ private:
         beauty = other.beauty;
         badHabits = other.badHabits;
         numSkills = other.numSkills;
-        // what about delete skills?
-        // - 0.2 
+
         for(int i=0;i<numSkills;i++)
         {
             skills[i] = other.skills[i];
@@ -275,8 +274,7 @@ private:
         assert(name!=NULL);
         strcpy(name,other.name);
         numMusicians = other.numMusicians;
-        // delete musicians?
-        // - 0.1
+        
         for(int i=0;i<numMusicians;i++)
         {
             musicians[i] = other.musicians[i];
@@ -519,4 +517,4 @@ int main()
     return 0;
 }
 
-//4.5
+//5.00
