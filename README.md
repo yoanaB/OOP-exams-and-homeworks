@@ -10,7 +10,7 @@ K1 - Group 1: </br>
 71580 K1 4.80 D1 later K2 3.50 D2 waiting</br>
 71559 K1 3.00 K2 2.00  <strong> Final: 2.00</strong> </br>
 71574 K1 2.00 cheater with 855255 so ( was 6.00) D1: Later  K2 5.60 D2: waiting  </br>
-71592 K1 4.20 </br>
+71592 K1 4.20 K2 3.00 </br>
 855255 K1 2.00 ( cheater with 71574) K2 2.70 </br>
 71543 K1 3.60 </br>
 71577 K1 3.40 D1 later K2 2.50 D2 waiting !!! </br>
