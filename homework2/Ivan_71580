@@ -1,0 +1,284 @@
+#include<iostream>
+#include<cstring>
+#include<cmath>
+using namespace std;
+class Point
+{
+private:
+	double x, y;
+public:
+	Point()
+	{
+		x = 0;
+		y = 0;
+	}
+	Point(double x, double y)
+	{
+		this->x = x;
+		this->y = y;
+	}
+	void setX(double x)
+	{
+		this->x = x;
+	}
+	void setY(double y)
+	{
+		this->y = y;
+	}
+	double getX()
+	{
+		return x;
+	}
+	double getY()
+	{
+		return y;
+	}
+	Point operator==(Point&other)
+	{
+		if (this !=& other)
+		{
+			this->x = other.x;
+			this->y = other.y;
+		}
+		return*this;
+	}
+	double Distance(Point other)//Разстоянието до друга точка.
+	{
+		double dx = this->x - other.x;
+		double dy = this->y - other.y;
+		return sqrt(dx*dx + dy*dy);
+	}
+	Point addPoint(Point b,double l,double r)
+	{
+		return Point(x + l, y + r);
+	}
+	void print()
+	{
+		cout << "Coordinates:(" << x << "," << y << ")" << endl;
+	}
+};
+class Shape
+{
+public:
+virtual double getArea() = 0;
+virtual double getPerimeter() = 0;
+virtual Point getCentreOfShape() = 0;
+};
+class Triangle:public Shape
+{
+private:
+	double x, y;
+Point a,b,c;
+double AB,AC,BC;
+public:
+	Triangle()
+	{
+		Point a(0, 0), b(0, 0), c(0, 0);
+		AB = 0;
+		AC = 0;
+		BC = 0;
+	}
+	Triangle(Point a, Point b, Point c)
+	{
+		this->AB = a.Distance(b);
+		this->AC = a.Distance(c);
+		this->BC = b.Distance(c);
+		if (AB == 0 || AC == 0 || BC == 0)
+		{
+			cout << "Your coordinated do not make a triangle.Please change them and try again." << endl;
+		}
+		if (((AB + AC) < BC) || ((AB + BC) < AC) || ((AC + BC) < AB))
+		{
+			cout << "Your coordinated do not make a triangle.Please change them and try again." << endl;
+		}
+	}
+	Triangle(const Triangle& other)
+	{
+		this->a = other.a;
+		this->b = other.b;
+		this->c = other.c;
+	}
+	Triangle operator ==(const Triangle& other)
+	{
+		if (this != &other)
+		{
+			this->a = other.a;
+			this->b = other.b;
+			this->c = other.c;
+		}
+		return*this;
+	}
+	void print()
+	{
+		cout << "AB=" << AB << endl;
+		cout << "AC=" << AC << endl;
+		cout << "BC=" << BC << endl;
+	}
+	virtual double getPerimeter()
+	{
+		return AB + AC + BC;
+	}
+	virtual double getArea()
+	{
+		double p = (AB + AC + BC) / 2;
+		return sqrt(p*(p - AB)*(p - AC)*(p - BC));
+	}
+	virtual Point getCentreOfShape()
+	{
+		double p = (AB + AC + BC) / 2;
+		double S = sqrt(p*(p - AB)*(p - AC)*(p - BC));
+		double r = S / p;//радиус на вписаната окръжност
+		double l = p - AB;
+		Point o;
+		cout << "Center of the Shape -> ";
+		return a.addPoint(o, l, r);
+	}
+};
+class Circle :public Shape
+{
+private:
+	double r, Pi = 3.14159265359;
+public:
+	Circle()
+	{
+		r = 0;
+	}
+	Circle(double r)
+	{
+		this->r = r;
+	}
+	Circle(const Circle& other)
+	{
+		this->r = other.r;
+	}
+	Circle operator ==(const Circle& other)
+	{
+		if (this != &other)
+		{
+			this->r = other.r;
+		}
+		return*this;
+	}
+	void print()
+	{
+		cout << "Radius:" << r<<endl;
+	}
+	virtual double getPerimeter()
+	{
+		return 2 * Pi*r;
+	}
+	virtual double getArea()
+	{
+		return Pi*r*r;
+	}
+	virtual Point getCentreOfShape()//тъй като е окръжност центъра да фигурата е там където ние си решим
+	{
+		return Point(0, 0);
+	}
+};
+class Rectangle :public Shape
+{
+private:
+	Point a, b, c, d;
+	double length, width;
+public:
+	Rectangle()
+	{
+		Point a(0, 0), b(0, 0), c(0, 0),d(0,0);
+		length = 0;
+		width = 0;
+	}
+	Rectangle(Point a,double length, double width)
+	{
+		this->length = length;
+		this->width = width;
+		this -> a = a;
+		this->b = a.addPoint(b, length, 0);
+		this->d = b.addPoint(d, 0, width);
+		this->c = a.addPoint(c, 0, width);
+	}
+	Rectangle(const Rectangle& other)
+	{
+		this->length = other.length;
+		this->width = other.width;
+		this->a = other.a;
+	}
+	Rectangle operator ==(const Rectangle& other)
+	{
+		if (this != &other)
+		{
+			this->length = other.length;
+			this->width = other.width;
+			this->a = other.a;
+		}
+		return*this;
+	}
+	void print()
+	{
+		cout << "Length=" << length << endl;
+		cout << "Width=" << width << endl;
+		cout << "A "; a.print();
+		cout << "B "; b.print();
+		cout << "C "; c.print();
+		cout << "D "; d.print();
+	}
+	virtual double getArea()
+	{
+		return length*width;
+	}
+	virtual double getPerimeter()
+	{
+		return 2 * (length + width);
+	}
+	virtual Point getCentreOfShape()
+	{
+		if (length == width)//Може да се впише окръжност само ако фигурата е квадрат
+		{
+			Point o;
+			double l = length / 2;
+			cout << "Center of the Shape -> ";
+			return a.addPoint(o, l, l);
+		}
+		return Point(0,0);
+	}
+};
+/*bool doShapesMatch(Triangle t, Rectangle r) //опит за функцията
+{
+	Point x = t.getCentreOfShape();
+	Point y = r.getCentreOfShape();
+	if (x == y)
+	{
+		return true;
+	}
+	return false;
+}*/
+void main()
+{
+	Point a(-1, 2), b(5, 8), c(6, 5);
+	Triangle p(a, b, c);
+	cout << "Triangle" << endl;
+	cout << endl;
+	p.print();
+	cout << "Perimeter=" << p.getPerimeter() << endl;
+	cout << "Area=" << p.getArea() << endl;
+	p.getCentreOfShape().print();
+	cout << endl;
+	Circle m(9);
+	cout << "Circle" << endl;
+	cout << endl;
+	m.print();
+	cout << "Perimeter=" << m.getPerimeter() << endl;
+	cout << "Area=" << m.getArea() << endl;
+	m.getCentreOfShape().print();
+	cout << endl;
+	Point A(3, 6);
+	Rectangle r(A, 5, 5);
+	cout << "Rectangle" << endl;
+	cout << endl;
+	r.print();
+	cout << "Perimeter=" << r.getPerimeter() << endl;
+	cout << "Area=" << r.getArea() << endl;
+	r.getCentreOfShape().print();
+	cout << endl;
+	system("pause");
+}
