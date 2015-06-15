@@ -505,7 +505,7 @@ int main()
 		cout << "Yes!!"<< endl;
 	}
 	else {
-		cout << "Yes!!" << endl;
+		cout << "No!!" << endl;
 	}
 	
 
