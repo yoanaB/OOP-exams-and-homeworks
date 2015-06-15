@@ -1,0 +1,396 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+class Point
+{
+	double x;
+	double y;
+public:
+	Point()
+	{
+		x = 0;
+		y = 0;
+	}
+
+	Point(double x, double y)
+	{
+		this->x = x;
+		this->y = y;
+	}
+
+	double getX()const
+	{
+		return x;
+	}
+
+	double getY()const
+	{
+		return y;
+	}
+
+	bool operator==(const Point& other)
+	{
+		if (x == other.x && y == other.y)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	double getLength(Point& other)
+	{
+		return sqrt(pow((other.x - x), 2) + pow((other.y - y), 2));
+	}
+
+};
+
+class Figure
+{
+public:
+	virtual double area() = 0;
+	virtual double perimeter() = 0;
+	virtual Point center() = 0;
+	virtual bool isInside(Figure&) = 0;
+	virtual bool isPointIn(Point&) = 0;
+
+
+};
+
+class Triangle : public Figure
+{
+	Point A;
+	Point B;
+	Point C;
+
+
+public:
+
+	Triangle()
+	{
+		A = Point(0, 0);
+		B = Point(2, 0);
+		C = Point(1, 2);
+	}
+
+	Triangle(Point p1, Point p2, Point p3)
+	{
+		if (isValid(p1,p2,p3))
+		{
+			A = p1;
+			B = p2;
+			C = p3;
+		}
+		else
+		{
+			A = Point(0, 0);
+			B = Point(2, 0);
+			C = Point(1, 2);
+		}
+
+
+	}
+
+	Triangle(const Triangle& other)
+	{
+		A = other.A;
+		B = other.B;
+		C = other.C;
+	}
+
+	Triangle& operator=(const Triangle& other)
+	{
+		if (this != &other)
+		{
+			A = other.A;
+			B = other.B;
+			C = other.C;
+		}
+		return *this;
+	}
+
+	bool operator==(const Triangle& other)
+	{
+		return (A == other.A && B == other.B && C == other.C);
+	}
+
+	~Triangle(){};
+
+	bool isValid(Point A1,Point B1,Point C1)
+	{
+		double A1B1 = A1.getLength(B1);
+		double B1C1 = B1.getLength(C1);
+		double A1C1 = A1.getLength(C1);
+
+		if (B1C1 + A1C1 > A1B1 && B1C1 + A1B1 > A1C1 && A1C1 + A1B1 > B1C1)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	double getAB()
+	{
+		return A.getLength(B);
+	}
+
+	double getBC()
+	{
+		return B.getLength(C);
+	}
+
+	double getAC()
+	{
+		return A.getLength(C);
+
+	}
+
+	double perimeter()
+	{
+		return (getAB() + getBC() + getAC());
+	}
+
+	double area()
+	{
+		double semiPerimeter = perimeter() / 2;
+		return sqrt(semiPerimeter*(semiPerimeter - getAB())*(semiPerimeter - getBC())*(semiPerimeter - getAC()));
+	}
+
+	Point center()
+	{
+		double Ox = ((getBC()*A.getX() + getAC()*B.getX() + getAB()*C.getX()) / perimeter());
+		double Oy = ((getBC()*A.getY() + getAC()*B.getY() + getAB()*C.getY()) / perimeter());
+		return Point(Ox, Oy);
+
+	}
+
+	double sign(Point& p1, Point& p2, Point& p3)
+	{
+		return (p1.getX() - p3.getX()) * (p2.getY() - p3.getY()) - (p2.getX() - p3.getX()) * (p1.getY() - p3.getY());
+	}
+
+	bool isPointIn(Point& p)
+	{
+		bool x1 = sign(p, A, B) < 0;
+		bool x2 = sign(p, B, C) < 0;
+		bool x3 = sign(p, B, A) < 0;
+
+		return ((x1 == x2) && (x2 == x3));
+	}
+
+	bool isInside(Figure& other)
+	{
+		if (other.isPointIn(A) && other.isPointIn(B) && other.isPointIn(C))
+		{
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+class Circle : public Figure
+{
+	Point O;
+	double r;
+	double pi = 3.14159265;
+public:
+	Circle()
+	{
+		O = Point(0, 0);
+		r = 1;
+	}
+
+	Circle(Point p, double r1)
+	{
+		O = p;
+		r = r1;
+	}
+
+	Circle(const Circle& other)
+	{
+		O = other.O;
+		r = other.r;
+	}
+
+	Circle& operator=(const Circle& other)
+	{
+		if (this != &other)
+		{
+			O = other.O;
+			r = other.r;
+		}
+
+		return *this;
+	}
+
+	bool operator ==(const Circle& other)
+	{
+		return (O == other.O && r == other.r);
+	}
+
+	~Circle(){};
+
+	double area()
+	{
+		return pi*pow(r, 2);
+	}
+
+	double perimeter()
+	{
+		return 2 * pi*r;
+	}
+
+	Point center()
+	{
+		return O;
+	}
+
+	bool isPointIn(Point& p)
+	{
+		return (O.getLength(p) < r);
+	}
+	
+	bool isInside(Figure& other)
+	{
+		return other.isPointIn(O);
+	}
+
+};
+
+class Rectangle : public Figure
+{
+	Point A;
+	Point B;
+	Point C;
+	Point D;
+public:
+	Rectangle()
+	{
+		A = Point(0, 0);
+		B = Point(3, 0);
+		C = Point(3, 2);
+		D = Point(0, 2);
+	}
+
+	Rectangle(Point p1, Point p2, Point p3, Point p4)
+	{
+		if (isValid(p1,p2,p3,p4))
+		{
+			A = p1;
+			B = p2;
+			C = p3;
+			D = p4;
+		}
+
+		else
+		{
+			A = Point(0, 0);
+			B = Point(3, 0);
+			C = Point(3, 2);
+			D = Point(0, 2);
+		}
+	}
+
+	Rectangle(const Rectangle& other)
+	{
+		A = other.A;
+		B = other.B;
+		C = other.C;
+		D = other.D;
+	}
+
+	Rectangle& operator=(const Rectangle& other)
+	{
+		if (this != &other)
+		{
+			A = other.A;
+			B = other.B;
+			C = other.C;
+			D = other.D;
+		}
+
+		return *this;
+	}
+
+	bool operator==(const Rectangle& other)
+	{
+		return (A == other.A && B == other.B && C == other.C && D == other.D);
+	}
+
+	~Rectangle(){};
+
+
+
+	bool isValid(Point A1, Point B1, Point C1, Point D1)
+	{
+		if (A1.getX() == D1.getX() && B1.getX() == C1.getX() && A1.getY() == B1.getY() && C1.getY() == D1.getY())
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	double getAB()
+	{
+		return A.getLength(B);
+	}
+
+	double getAD()
+	{
+		return A.getLength(D);
+	}
+
+	double area()
+	{
+		return getAB()*getAD();
+	}
+
+	double perimeter()
+	{
+		return 2 * getAB() + 2 * getAD();
+	}
+
+	Point center()
+	{
+		double Ox = (A.getX() + B.getX()) / 2;
+		double Oy = (A.getY() + D.getY()) / 2;
+		
+		return Point(Ox, Oy);
+	}
+
+	bool isPointIn(Point& p)
+	{
+		double x1 = p.getX() - A.getX();
+		double y1 = p.getY() - A.getY();
+
+		bool b1 = x1*((B.getX() - A.getX()) / getAB()) + y1*((B.getY() - A.getY()) / getAD()) >= 0;
+		bool b2 = x1*((B.getX() - A.getX()) / getAB()) + y1*((B.getY() - A.getY()) / getAD()) <= getAB();
+		bool b3 = x1*((D.getX() - A.getX()) / getAB()) + y1*((D.getY() - A.getY()) / getAD()) >= 0;
+		bool b4 = x1*((D.getX() - A.getX()) / getAB()) + y1*((D.getY() - A.getY()) / getAD()) <= getAD();
+
+		return (b1 && b2 && b3 &&b4);
+	}
+
+	bool isInside(Figure& other)
+	{
+		return (other.isPointIn(A) && other.isPointIn(B) && other.isPointIn(C) && other.isPointIn(D));
+	}
+
+};
+
+
+
+int main()
+{
+
+
+	system("pause");
+	return 0;
+}
