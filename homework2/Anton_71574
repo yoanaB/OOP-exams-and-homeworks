@@ -1,0 +1,197 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+struct Point {
+	double x, y;
+
+	Point(double x = 0, double y = 0) {
+		this->x = x;
+		this->y = y;
+	}
+
+	bool operator== (Point& o) {
+		return this->x == o.x && this->y == o.y;
+	}
+
+	static double getDistance(Point& p1, Point& p2) {
+		return sqrt((p1.x - p2.x) * (p1.x - p2.x) +
+						(p1.y - p2.y) * (p1.y - p2.y));
+	}
+};
+
+class Shape {
+public:
+	virtual double getArea() = 0;
+	virtual double getPerimeter() = 0;
+	virtual Point getCenter() = 0;
+	virtual bool isPointInside(Point&) = 0;
+	virtual bool isInside(Shape&) = 0;
+};
+
+class Circle: public Shape {
+private:
+	Point center;
+	double radius;
+
+public:
+	Point getCenter() {
+		return this->center;
+	}
+
+	double getPerimeter() {
+		return 2 * this->radius * M_PI;
+	}
+
+	double getArea() {
+		return this->radius * this->radius * M_PI;
+	}
+
+	bool isPointInside(Point& p) {
+		return Point::getDistance(this->center, p) < this->radius;
+	}
+
+	bool isInside(Shape& o) {
+		//TO DO
+	}
+
+	Circle(Point center, double radius) {
+		this->center = center;
+		this->radius = radius;
+	}
+
+	bool operator== (Circle& o) {
+		return this->center == o.center &&
+				this->radius == o.radius;
+	}
+};
+
+class Rectangle: public Shape {
+private:
+	Point upLeftPoint;
+	double width;
+	double height;
+
+public:
+	Point getCenter() {
+		return Point(this->upLeftPoint.x + this->width / 2, this->upLeftPoint.y - this->height / 2);
+	}
+
+	double getPerimeter() {
+		return 2 * this->width + 2 * this->height;
+	}
+
+	double getArea() {
+		return this->width * this->height;
+	}
+
+	bool isPointInside(Point& p) {
+		return p.x > this->upLeftPoint.x && p.x < this->upLeftPoint.x + this->width
+				&& p.y < this->upLeftPoint.y && p.y > this->upLeftPoint.y - this->height;
+	}
+
+	bool isInside(Shape& o) {
+		Point p1(this->upLeftPoint.x + this->width, this->upLeftPoint.y);
+		Point p2(this->upLeftPoint.x + this->width, this->upLeftPoint.y - this->height);
+		Point p3(this->upLeftPoint.x, this->upLeftPoint.y - this->height);
+
+		return o.isPointInside(this->upLeftPoint) &&
+				o.isPointInside(p1) &&
+				o.isPointInside(p2) &&
+				o.isPointInside(p3);
+	}
+
+	Rectangle(Point upLeftPoint, double width, double height) {
+		this->upLeftPoint = upLeftPoint;
+		this->width = width;
+		this->height = height;
+	}
+
+	bool operator== (Rectangle& o) {
+		return this->upLeftPoint == o.upLeftPoint &&
+				this->width == o.width &&
+				this->height == o.height;
+	}
+};
+
+class Triangle: public Shape {
+private:
+	Point pointA, pointB, pointC;
+
+	void getSideLengths(double& a, double& b, double& c) {
+		c = Point::getDistance(this->pointA, this->pointB);
+		a = Point::getDistance(this->pointB, this->pointC);
+		b = Point::getDistance(this->pointA, this->pointC);
+	}
+
+	int sign(Point& a, Point& b, Point& c) {
+		return (a.x - c.x) * (b.y - c.y) - (b.x - c.x) * (a.y - c.y);
+	}
+
+public:
+	Point getCenter() {
+		double a, b, c;
+		getSideLengths(a, b, c);
+		int x = (a * this->pointA.x + b * this->pointB.x + c * this->pointC.x)/(a + b + c);
+		int y = (a * this->pointA.y + b * this->pointB.y + c * this->pointC.y)/(a + b + c);
+		return Point(x, y);
+	}
+
+	double getPerimeter() {
+		double a, b, c;
+		getSideLengths(a, b, c);
+		return a + b + c;
+	}
+
+	double getArea() {
+		return abs(((double)this->pointA.x * (this->pointB.y - this->pointC.y) +
+				this->pointB.x * (this->pointC.y - this->pointA.y) +
+				this->pointC.x * (this->pointA.y - this->pointB.y)) / 2);
+	}
+
+	bool isPointInside(Point& p) {
+		bool b1 = sign(p, this->pointA, this->pointB) < 0;
+		bool b2 = sign(p, this->pointB, this->pointC) < 0;
+		bool b3 = sign(p, this->pointB, this->pointA) < 0;
+
+		return ((b1 == b2) && (b2 == b3));
+	}
+
+	bool isInside(Shape& o) {
+		return o.isPointInside(this->pointA) &&
+				o.isPointInside(this->pointB) &&
+				o.isPointInside(this->pointC);
+	}
+
+	Triangle(Point pointA, Point pointB, Point pointC) {
+		this->pointA = pointA;
+		this->pointB = pointB;
+		this->pointC = pointC;
+	}
+
+	bool operator== (Triangle& o) {
+		return this->pointA == o.pointA &&
+				this->pointB == o.pointB &&
+				this->pointC == o.pointC;
+	}
+};
+
+int main() {
+	Point p(-274, -253);
+	Point p2(-1, 7);
+	Point p3(14, 7);
+
+	Circle c(p, 5.65);
+	Circle c1(p, 5.65);
+	Circle c3(p, 5.66);
+	cout << (c == c1) << endl << (c == c3) << endl;
+	cout << c.getArea() << endl << c.getPerimeter() << endl << c.getCenter().x << endl;
+
+	Rectangle r(p, 5, 3);
+	cout << r.getArea() << endl << r.getPerimeter() << endl << r.getCenter().x << endl;
+
+	Triangle t(p, p2, p3);
+	cout << t.getArea() << endl << t.getPerimeter() << endl << t.getCenter().x << endl << t.getCenter().y << endl;
+
+	return 0;
+}
