@@ -5,12 +5,19 @@ using namespace std;
 struct ID
 {
 private:
-    char family[25];
+    char* family;
     int day;
     int month;
     int year;
 public:
-    const char*family() const //get-metod na char
+void setFamily(char* family)
+    {
+        delete [] this->family;
+        this->family=new char[strlen(family)+1];
+        assert(this->family!=NULL);
+        strcpy(this->family, family);
+    }
+    const char*family() const 
     {
         return family();
     }
