@@ -1,0 +1,388 @@
+#include <iostream>
+#include <cassert>
+#include <cstring>
+#include <cmath>
+
+using namespace std;
+
+class Point
+{
+private:
+    double x, y;
+public:
+    Point(double x=0,double y=0)
+    {
+        this->x = x;
+        this->y = y;
+    }
+    Point(const Point& other)
+    {
+        this->x = other.x;
+        this->y = other.y;
+    }
+    Point& operator=(const Point& other)
+    {
+        if(this!=&other)
+        {
+            this->x = other.x;
+            this->y = other.y;
+        }
+        return *this;
+    }
+    ~Point()
+    {
+
+    }
+    void print() const
+    {
+        cout<<"("<<x<<","<<y<<")"<<endl;
+    }
+    void setX(double a)
+    {
+        x = a;
+    }
+    void setY(double b)
+    {
+        y = b;
+    }
+    double getX() const
+    {
+        return x;
+    }
+    double getY() const
+    {
+        return y;
+    }
+    bool operator==(const Point& t)
+    {
+        return x == t.getX() && y == t.getY();
+    }
+    bool isBetween(Point a,Point b)
+    {
+        return this->x >= a.getX() && this->x <= b.getX() && this->y >= a.getY() && this->y <= b.getY();
+    }
+};
+
+double side(const Point& a,const Point& b)
+{
+    return sqrt(pow((a.getX()-b.getX()),2) + pow((a.getY()-b.getY()),2));
+}
+
+class Figure
+{
+public:
+    virtual double area() const = 0;
+    virtual double perimeter() const = 0;
+    virtual Point getCenter() const = 0;
+    virtual char getType() const = 0;
+    virtual Point getA() const = 0;
+    virtual Point getB() const = 0;
+    virtual Point getC() const = 0;
+    virtual double getRadius() const = 0;
+    virtual bool containsPoint(Point a) = 0;
+    virtual void print() const = 0;
+    bool operator==(const Figure& a)
+    {
+        if(this->getType() == a.getType())
+        {
+            if(a.getType() == 't')
+            {
+                return this->getA() == a.getA() && this->getB() == a.getB() && this->getC() == a.getC();
+            }
+            if(a.getType() == 'c')
+            {
+                return this->getCenter() == a.getCenter() && this->getRadius() == a.getRadius();
+            }
+            return this->getA() == a.getA() && this->getB() == a.getB();
+        }
+        return false;
+    }
+};
+
+class Circle : public Figure
+{
+private:
+    Point O;
+    double r;
+public:
+    Circle(double x=0,double y=0,double r=1):O(x,y)
+    {
+        this->r = r;
+    }
+    Circle(const Circle& other)
+    {
+        this->O = other.O;
+        r = other.r;
+
+    }
+    Circle& operator=(const Circle& other)
+    {
+        if(this!=&other)
+        {
+            this->O = other.O;
+            r = other.r;
+        }
+        return *this;
+    }
+    virtual double area() const
+    {
+        return M_PI*pow(r,2);
+    }
+    virtual double perimeter() const
+    {
+        return 2*M_PI*r;
+    }
+    virtual Point getCenter() const
+    {
+        return O;
+    }
+    virtual char getType() const
+    {
+        return 'c';
+    }
+    virtual Point getA() const {}
+    virtual Point getB() const {}
+    virtual Point getC() const {}
+    virtual double getRadius() const
+    {
+        return r;
+    }
+    virtual bool containsPoint(Point a)
+    {
+        return pow((a.getX() - O.getX()),2) +
+                    pow((a.getY() - O.getY()),2) <= pow(r,2);
+    }
+    virtual void print() const
+    {
+        cout<<"Circle: "<<endl
+            <<"Area: "<<area()<<endl
+            <<"Perimeter: "<<perimeter()<<endl
+            <<"Center: "<<endl;
+            (getCenter()).print();
+        cout<<endl;
+    }
+};
+
+class Rectangle : public Figure
+{
+private:
+    Point A, C;  //    ______  C
+                 //   |      |
+                 // A |______| B
+public:
+    Rectangle(double x1=0,double y1=0,double x2=0,double y2=0):A(x1,y1),C(x2,y2) {}
+    Rectangle(const Rectangle& other)
+    {
+        A = other.A;
+        C = other.C;
+
+    }
+    Rectangle& operator=(const Rectangle& other)
+    {
+        if(this!=&other)
+        {
+            A = other.A;
+            C = other.C;
+        }
+        return *this;
+    }
+    virtual double area() const
+    {
+        return side(A,getB()) * side(getB(),C);
+    }
+    virtual double perimeter() const
+    {
+        return 2*(side(A,getB()) + side(getB(),C));
+    }
+    virtual Point getCenter() const
+    {
+        Point p(((C.getX()+A.getX())/2),((C.getY()+A.getY())/2));
+        return p;
+    }
+    virtual char getType() const
+    {
+        return 'r';
+    }
+    virtual Point getA() const
+    {
+        return A;
+    }
+    virtual Point getB() const
+    {
+        Point B(C.getX(),A.getY());
+        return B;
+    }
+    virtual Point getC() const
+    {
+        return C;
+    }
+    virtual double getRadius() const
+    {
+        if(side(A,getB()) == side(getB(),C))
+        {
+            Point p(((A.getX()+C.getX())/2),A.getY());
+            return side(getCenter(),p);
+        }
+    }
+    virtual bool containsPoint(Point a)
+    {
+        return a.isBetween(A,C);
+    }
+    virtual void print() const
+    {
+        cout<<"Rectangle: "<<endl
+            <<"Area: "<<area()<<endl
+            <<"Perimeter: "<<perimeter()<<endl
+            <<"Center: "<<endl;
+            (getCenter()).print();
+        cout<<endl;
+    }
+};
+
+class Triangle : public Figure
+{
+private:
+    Point A, B, C; //         C
+                   //        / \
+                   //       /   \
+                   //    A ------- B
+public:
+    Triangle(double x1=0,double y1=0,double x2=0,double y2=0,double x3=0,double y3=0):A(x1,y1),B(x2,y2),C(x3,y3){}
+    Triangle(const Triangle& other)
+    {
+        A = other.A;
+        B = other.B;
+        C = other.C;
+    }
+    Triangle& operator=(const Triangle& other)
+    {
+        if(this!=&other)
+        {
+            A = other.A;
+            B = other.B;
+            C = other.C;
+        }
+        return *this;
+    }
+    virtual double area() const
+    {
+        return sqrt((perimeter()/2)*(perimeter()/2 - side(A,B))*(perimeter()/2 - side(B,C))*(perimeter()/2 - side(A,C)));
+    }
+    virtual double perimeter() const
+    {
+        return side(A,B) + side(B,C) + side(C,A);
+    }
+    virtual Point getCenter() const
+    {
+        Point O((((side(B,C))*A.getX() + (side(A,C))*B.getX() + (side(B,A))*C.getX())/perimeter()),
+                    (((side(B,C))*A.getY() + (side(A,C))*B.getY() + (side(B,A))*C.getY())/perimeter()));
+        return O;
+    }
+    virtual char getType() const
+    {
+        return 't';
+    }
+    virtual Point getA() const
+    {
+        return A;
+    }
+    virtual Point getB() const
+    {
+        return B;
+    }
+    virtual Point getC() const
+    {
+        return C;
+    }
+    virtual double getRadius() const
+    {
+        Triangle t(A.getX(),A.getY(),B.getX(),B.getY(),(getCenter()).getX(),(getCenter()).getY());
+        double s = t.area();
+        return 2*s/(side(A,B));
+    }
+    virtual bool containsPoint(Point a)
+    {
+        double detT = (B.getY() - C.getY())*(A.getX() - C.getX()) + (C.getX() - B.getX())*(A.getY() - C.getY());
+        double alpha = ((B.getY() - C.getY())*(a.getX() - C.getX()) + (C.getX() - B.getX())*(a.getY() - C.getY()))/detT;
+        double beta = ((C.getY() - A.getY())*(a.getX() - C.getX()) + (A.getX() - C.getX())*(a.getY() - C.getY()))/detT;
+        double gamma = 1 - alpha - beta;
+        return alpha >= 0 && beta >= 0 && gamma >= 0;
+    }
+    virtual void print() const
+    {
+        cout<<"Triangle: "<<endl
+            <<"Area: "<<area()<<endl
+            <<"Perimeter: "<<perimeter()<<endl
+            <<"Center: "<<endl;
+            (getCenter()).print();
+        cout<<endl;
+    }
+};
+
+bool figureContainsAnother(Figure* a,Figure* b)
+{
+    if(b->getType() == 't')
+    {
+        return a->containsPoint(b->getA()) && a->containsPoint(b->getB()) && a->containsPoint(b->getC());
+    }
+    if(b->getType() == 'r')
+    {
+        return a->containsPoint(b->getA()) && a->containsPoint(b->getC());
+    }
+    if(b->getType() == 'c')
+    {
+        if(a->getType() == 'c')
+        {
+            return (pow(((b->getCenter()).getX() - (a->getCenter()).getX()),2) +
+                    pow(((b->getCenter()).getY() - (a->getCenter()).getY()),2)) <= pow((a->getRadius() - b->getRadius()),2);
+        }
+        if(a->getType() == 'r')
+        {
+
+            Point lowerL((b->getCenter()).getX() - b->getRadius(),(b->getCenter()).getY() - b->getRadius());
+            Point upperR((b->getCenter()).getX() + b->getRadius(),(b->getCenter()).getY() + b->getRadius());
+            return a->containsPoint(lowerL) && a->containsPoint(upperR);
+        }
+        if(a->getType() == 't')
+        {
+            if(b->getRadius() > a->getRadius())
+                return false;
+            if(a->containsPoint(b->getCenter()))
+            {
+                Triangle t1((a->getA()).getX(),(a->getA()).getY(),(a->getB()).getX(),(a->getB()).getY(),(b->getCenter()).getX(),(b->getCenter()).getY());
+                double h1 = 2*(t1.area())/side(a->getA(),a->getB());
+                if(h1 < b->getRadius())
+                    return false;
+                Triangle t2((a->getB()).getX(),(a->getB()).getY(),(a->getC()).getX(),(a->getC()).getY(),(b->getCenter()).getX(),(b->getCenter()).getY());
+                double h2 = 2*(t2.area())/side(a->getB(),a->getC());
+                if(h2 < b->getRadius())
+                    return false;
+                Triangle t3((a->getA()).getX(),(a->getA()).getY(),(a->getC()).getX(),(a->getC()).getY(),(b->getCenter()).getX(),(b->getCenter()).getY());
+                double h3 = 2*(t3.area())/side(a->getA(),a->getC());
+                return h3 >= b->getRadius();
+            }
+            return false;
+        }
+    }
+    return false;
+}
+
+int main()
+{
+    Rectangle r1(1,1,5,5);
+    Rectangle r2 = r1;
+    if(r2 == r1)
+        cout<<"The two figures are equal!"<<endl;
+    Circle c1(0,0,4);
+    Triangle t(0,0,4,0,0,4);
+    Triangle t2(0,0,2,2,4,0);
+    Figure* f[10] = {&c1,&t,&t2,&r1};
+    for(int i=0;i<4;i++)
+    {
+        f[i]->print();
+    }
+    Triangle t3(1,2,6,1,5,4);
+    Circle c2(3,2,0.3);
+    cout<<figureContainsAnother(f[0],f[2]);
+    return 0;
+}
