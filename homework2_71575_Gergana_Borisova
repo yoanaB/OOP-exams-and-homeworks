@@ -1,0 +1,204 @@
+#ifndef FIGURE_H
+#define FIGURE_H
+
+struct Point
+{
+	double x;
+	double y;
+	Point();
+	void setX(double);
+	void setY(double);
+	Point(double, double);
+	bool operator==(const Point&);
+	void display();
+
+
+};
+class Figure{
+protected:
+	Point arr;
+
+	
+
+public:
+
+	virtual double getArea()const = 0;
+	virtual double getPerimeter()const = 0;
+	virtual Point& getCenter()const = 0;
+	
+
+};
+
+class Triangle : public Figure{
+
+private:
+	Point arr[3];
+
+public:
+	Triangle(Point, Point, Point);
+	double getArea()const;
+	double getPerimeter()const;
+	Point& getCenter()const;
+	bool operator==(const Triangle& other);
+
+
+};
+
+class Rectangle : public Figure{
+
+private:
+	Point arr[2];
+
+public:
+	double getArea()const;
+	double getPerimeter()const;
+	Point& getCenter()const;
+	double getWidth()const;
+	double getHeight()const;
+	Rectangle (Point, Point);
+	bool operator==(const Rectangle& other);
+
+
+};
+
+class Circle : public Figure{
+
+private:
+	Point z;
+	double r;
+
+public:
+	Circle(Point, double);
+	double getArea()const;
+	double getPerimeter()const;
+	Point& getCenter()const;
+	bool operator==(const Circle& other);
+
+};
+
+#endif FIGURE_H
+
+#include <iostream>
+#include<cstring>
+#include "Figure.h"
+
+using namespace std;
+
+Point::Point(){
+	x = 0;
+	y = 0;
+}
+
+Point::Point(double x, double y){
+	this->x = x;
+	this->y = y;
+}
+
+void Point::setX(double x){
+	this->setX = x;
+}
+
+void Point::setY(double y){
+	this->setY = y;
+}
+
+void Point::display(){
+	cout << "Please, enter x value:" << endl;
+	cin >> x;
+	setX(x);
+	cout << "Please, enter y value:" << endl;
+	cin >> y;
+	setY(y);
+}
+
+bool Point :: operator==(const Point& other){
+	return this->x == other.x && this->y == other.y;
+}
+
+Triangle::Triangle(Point a, Point b, Point c){
+	
+	this->arr[0] = a;
+	this->arr[1] = b;
+	this->arr[2] = c;
+}
+
+
+double Triangle::getPerimeter() const
+{
+	//no idea how to do it
+}
+
+double Triangle::getArea()const{
+	double one = (arr[0].x - arr[2].x)*(arr[1].y - arr[0].y);
+	double two = (arr[0].x - arr[1].x)*(arr[2].y - arr[0].y);
+	cout << "Area of triangle is :";
+	return abs((one - two) / 2);
+}
+
+Point& Triangle::getCenter() const
+{
+	double Ox = (arr[0].x + arr[1].x + arr[2].x) / 3;
+	double Oy = (arr[0].y + arr[1].y + arr[2].y) / 3;
+	return Point(Ox, Oy);
+}
+
+bool Triangle :: operator==(const Triangle& other)
+{
+	return (this->arr[0] == other.arr[0] &&
+		this->arr[1] == other.arr[1] &&
+		this->arr[2] == other.arr[2]);
+}
+
+Rectangle::Rectangle(Point a, Point b){
+	this->arr[0] = a;
+	this->arr[1] = b;
+}
+
+double Rectangle::getWidth() const
+{
+	return arr[1].x - arr[0].x;
+}
+
+double Rectangle::getHeight() const
+{
+	return arr[1].y - arr[0].y;
+}
+
+double Rectangle::getPerimeter() const
+{
+	return 2 * (getWidth() + getHeight());
+}
+
+double Rectangle::getArea()const{
+	return getWidth() * getHeight();
+}
+
+bool Rectangle :: operator==(const Rectangle &other)
+{
+	return (this->arr[0] == other.arr[0] &&
+		this->arr[1] == other.arr[1]);
+}
+
+Circle::Circle(Point c, double r)
+{
+	this->z = z;
+	this->r = r;
+}
+
+double Circle::getArea()const{
+	return pow(r, 2) * PI // ne znam kak se pishe chisloto pi :);
+}
+
+double Circle::getPerimeter()const{
+	return 2 * PI * r;
+}
+
+Point& Circle::getCenter() const
+{
+	return z;
+}
+
+bool Circle :: operator==(const Circle& other)
+{
+	return(this->z == other.z && this->r == other.r);
+}
