@@ -1,0 +1,240 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+struct Point
+{
+    int x,y;
+
+    Point(int x = 0, int y = 0)
+    {
+        this->x = x;
+        this->y=y;
+    }
+    Point(const Point& other)
+    {
+        this->x = other.x;
+        this->y = other.y;
+    }
+    Point& operator=(const Point& other)
+    {
+        if(this != &other)
+        {
+            this->x = other.x;
+            this->y = other.y;
+        }
+        return *this;
+    }
+    bool isPointBetween(Point o, Point t)
+    {
+        return ((this->x >= o.x && this->x <= t.x) && (this->y >= o.y && this->y <= t.y));
+    }
+};
+
+class Figure
+{
+public:
+    virtual double findArea() = 0;
+    virtual double findPer() = 0;
+    virtual Point findCenter() = 0;
+    virtual char getType() = 0;
+    virtual bool figureContainsPoint(Point f) = 0;
+};
+
+class Triangle: public Figure
+{
+private:
+    Point a,b,c;
+
+public:
+    char getType()
+    {
+        return 't';
+    }
+    double getAB()
+    {
+        return sqrt((a.x - b.x)*(a.x - b.x)+(a.y - b.y)*(a.y - b.y));
+    }
+    double getBC()
+    {
+        return sqrt((b.x - c.x)*(b.x - c.x)+(b.y - c.y)*(b.y - c.y));
+    }
+    double getCA()
+    {
+        return sqrt((c.x - a.x)*(c.x - a.x)+(c.y - a.y)*(c.y - a.y));
+    }
+
+    double findArea()
+    {
+        double p = this->findPer() / 2;
+        return sqrt(p*(p-getAB())*(p-getBC())*(p-getCA()));
+    }
+    double findPer()
+    {
+        return getAB() + getBC() + getCA();
+    }
+    Point findCenter()
+    {
+        Point newOne;
+        return newOne((getBC()*a.x + getCA()*b.x + getAB()*c.x)/findPer(),(getBC()*a.y + getCA()*b.y + getAB()*c.y)/findPer());
+    }
+    Triangle()
+    {
+        a(0,0);
+        b(1,1);
+        c(2,2);
+    }
+    Triangle(Point a, Point b, Point c)
+    {
+        this->a = a;
+        this->b = b;
+        this->c = c;
+    }
+    Triangle(const Triangle& other)
+    {
+        this->a = other.a;
+        this->b = other.b;
+        this->c = other.c;
+    }
+    Triangle& operator=(const Triangle& other)
+    {
+        if(this != &other)
+        {
+            this->a = other.a;
+            this->b = other.b;
+            this->c = other.c;
+        }
+        return *this;
+    }
+    ~Triangle(){}
+    bool operator==(const Triangle& other)
+    {
+        return ((a.x == other.a.x && b.x == other.b.x && c.x == other.c.x) && (a.y == other.a.y && b.y == other.b.y && c.y == other.c.y));
+    }
+};
+
+class Rectangle: public Figure
+{
+private:
+    Point tL,bR;
+public:
+    char getType()
+    {
+        return 'r';
+    }
+    double getWidth()
+    {
+        return bR.x - tL.x;
+    }
+    double getHeight()
+    {
+        return tL.y - bR.y;
+    }
+    double findArea()
+    {
+        return getHeight()*getWidth();
+    }
+    double findPer()
+    {
+        return 2*(getHeight()+getWidth());
+    }
+    Point findCenter()
+    {
+        Point newOne;
+        return newOne(getWidth()/2, getHeight()/2);
+    }
+    Rectangle()
+    {
+        tL(0,2);
+        bR(2,0);
+    }
+    Rectangle(Point tL, Point bR)
+    {
+        this->tL = tL;
+        this->bR = bR;
+    }
+    Rectangle(const Rectangle& other)
+    {
+        this->tL = other.tL;
+        this->bR = other.bR;
+    }
+    Rectangle& operator=(const Rectangle& other)
+    {
+        if(this != &other)
+        {
+            this->tL = other.tL;
+            this->bR = other.bR;
+        }
+        return *this;
+    }
+    ~Rectangle(){}
+    bool operator==(const Rectangle& other)
+    {
+        return ((this->tL.x == other.tL.x && this->bR == other.bR.x) && (this->bR.y == other.bR.y && this->tL.y == other.tL.y));
+    }
+    bool figureContainsPoint(Point f)
+    {
+        return f.isPointBetween(tL,bR);
+    }
+};
+
+class Circle: public Figure
+{
+private:
+    Point center, another;
+public:
+    char getType()
+    {
+        return 'c';
+    }
+    double getRadius()
+    {
+        return sqrt((center.x - another.x)*(center.x - another.x)+(center.y - another.y)*(center.y - another.y));
+    }
+    double findArea()
+    {
+        return M_PI*r*r;
+    }
+    double findPer()
+    {
+        return 2*M_PI*r;
+    }
+    Point findCenter()
+    {
+        return this->center;
+    }
+    Circle()
+    {
+        center(0,0);
+        another(1,1);
+    }
+    Circle(Point center, Point another)
+    {
+        this->center = center;
+        this->another = another;
+    }
+    Circle(const Circle& other)
+    {
+        this->center = other.center;
+        this->another = other.another;
+    }
+    Circle& operator=(const Circle& other)
+    {
+        if(this != &other)
+        {
+            this->center = other.center;
+            this->another = other.another;
+        }
+        return *this;
+    }
+    bool operator==(const Circle& other)
+    {
+        return ((this->center.x == other.center.x && this->another == other.another.x) && (this->another.y == other.another.y && this->center.y == other.center.y));
+    }
+    bool figureContainsPoint(Point f)
+    {
+        return ((f.x - center.x)*(f.x - center.x)) + ((f.y - center.y)*(f.y - center.y)) <= r*r);
+    }
+};
+
