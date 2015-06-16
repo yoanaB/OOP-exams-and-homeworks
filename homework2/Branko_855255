@@ -1,0 +1,215 @@
+#include <iostream>
+#include <cstring>
+#include <cmath>
+using namespace std;
+class Points{
+private:
+    double x,y;
+public:
+    void setX(double x){
+        this->x = x;
+    }
+    int getX(){
+        return this->x;
+    }
+    void setY(double y){
+        this->y = y;
+    }
+    int getY(){
+        return this->y;
+    }
+    Points(){
+        x=0;
+        y=0;
+    }
+    Points(double x, double y){
+        this->x = x;
+        this->y = y;
+    }
+    Points& operator ==(const Points& other){
+        if(this!=&other){
+            this->x=other.x;
+            this->y=other.y;
+        }
+        return *this;
+    }
+void print (){
+    cout<< this->x << "" << this->y << endl;
+}
+};
+class Shape
+{
+public:
+virtual double getArea() = 0;
+virtual double getPerimeter() = 0;
+virtual Points getCentreOfShape() = 0;
+};
+
+class Triangle:public Shape{
+private:
+    double x,y;
+    Points a,b,c;
+    double AB,AC,BC;
+
+public:
+    Triangle(){
+        Points a(0,0), b(0,0),c(0,0);{
+            this->AB=0;
+            this->AC=0;
+            this->BC=0;
+        }
+    }
+    Triangle(Points a, Points b, Points c){
+        this->AB=0;
+        this->AC=0;
+        this->BC=0;
+        if(AB==0 || AC == 0 || BC == 0){
+            cout <<"Your points doesn't make a triangle,sorry"<<endl;
+        }
+
+    }
+    Triangle(const Triangle& other)
+	{
+		this->a = other.a;
+		this->b = other.b;
+		this->c = other.c;
+	}
+	Triangle&operator ==(const Triangle& other)
+	{
+		if (this != &other)
+		{
+			this->a = other.a;
+			this->b = other.b;
+			this->c = other.c;
+		}
+		return *this;
+	}
+	void print (){
+        cout <<"AB=" <<this->AB <<" "<<"AC=" << this->AC<<" "<<"BC=" << this->BC <<endl;
+	}
+	virtual double getPerimeter()
+	{
+		return AB + AC + BC;
+	}
+	virtual double getArea()
+	{
+		double p = (AB + AC + BC) / 2;
+		return sqrt(p*(p - AB)*(p - AC)*(p - BC));
+	}
+	virtual Points getCentreOfShape()
+	{
+		double p = (AB + AC + BC) / 2;
+		double S = sqrt(p*(p - AB)*(p - AC)*(p - BC));
+		double r = S / p;
+		double l = p - AB;
+		cout<< "p=" << p <<endl;
+		cout<< "S=" << S <<endl;
+		cout<< "r=" << r <<endl;
+		cout<< "l=" << l <<endl;
+		Points o;
+		cout << "CenterOfShape="<<endl;
+        return Points();
+	}
+
+};
+
+class Circle : public Shape{
+private:
+    double radius;
+    const double pi=3.1415;
+    void init(double radius){
+    this->radius=radius;
+    }
+public:
+    Circle()
+	{
+		init(radius=1);
+	}
+    Circle(double pi,double radius){
+        init(radius);
+    }
+	Circle(const Circle& other)
+	{
+		init(other.radius);
+	}
+	Circle&operator ==(const Circle& other)
+	{
+		if (this != &other)
+		{
+			init(other.radius);
+		}
+		return*this;
+	}
+	void print()
+	{
+		cout << "Radius=" << radius<<endl;
+	}
+	virtual double getPerimeter()
+	{
+		return 2 * pi * radius;
+	}
+	virtual double getArea()
+	{
+		return pow(radius,2)*pi;
+	}
+	virtual Points getCentreOfShape(){
+		return Points(0, 0);
+	}
+
+};
+class Rectangle :public Shape{
+private:
+	Points a, b, c, d;
+	double height, length;
+	void recinit(double height, double length){
+        this->height=length;
+        this->length=length;
+	}
+public:
+    Rectangle(){
+        Points a(0, 0), b(0, 0), c(0, 0),d(0,0);
+        recinit(height=0,length=0);
+    }
+    Rectangle(double height,double length){
+        recinit(height,length);
+    }
+    Rectangle(const Rectangle& other){
+        recinit(other.height,other.length);
+    }
+    Rectangle& operator ==(const Rectangle& other)
+	{
+		if (this != &other)
+		{
+			recinit(other.height,other.length);
+		}
+		return*this;
+	}
+	virtual double getArea()
+	{
+		return length*height;
+	}
+	virtual double getPerimeter()
+	{
+		return 2 * (length + height);
+	}
+	virtual Points getCentreOfShape()
+	{
+		if (length == height)
+		{
+			Points o;
+			double l = length / 2;
+			cout<< "l=" << l << endl;
+			cout << "CenterOfShape="<<endl;
+			return Points();
+		}
+		return Points(0,0);
+	}
+	void print()
+	{
+		cout << "Height=" << height << " " << "Length=" << length << endl;
+};
+int main()
+{
+
+    return 0;
+}
