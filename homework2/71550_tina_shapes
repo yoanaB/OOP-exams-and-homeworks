@@ -1,0 +1,470 @@
+#include <iostream>
+#include <cassert>
+#include <cstring>
+#include <cmath>
+#define _USE_MATH_DEFINES
+
+using namespace std;
+struct Point
+{
+    double x, y;
+    Point()
+    {
+        x = 0;
+        y = 0;
+    }
+    Point(double x, double y)
+    {
+        this->x = x;
+        this->y = y;
+    }
+    Point(const Point& other)
+    {
+        x = other.x;
+        y = other.y;
+    }
+    ~Point()
+    {
+
+    }
+    Point& operator=(const Point& other)
+    {
+        if(this != &other)
+        {
+            x = other.x;
+            y = other.y;
+        }
+        return *this;
+    }
+    bool operator<(const Point& other)
+    {
+        return (x < other.x && y < other.y);
+    }
+    bool operator>(const Point& other)
+    {
+        return (x > other.x && y > other.y);
+    }
+    bool operator==(const Point& other)
+    {
+        return (x == other.x && y == other.y);
+    }
+    void print()
+    {
+        cout << "( " << x << ", " << y << " )" << endl;
+    }
+};
+
+class Shape
+{
+public:
+    virtual double get_area()=0;
+    virtual double get_perimeter()=0;
+    virtual Point get_center()=0;
+    double get_distance(Point a, Point b)
+    {
+        return sqrt((b.x - a.x)*(b.x - a.x) + (b.y - a.y)*(b.y - a.y));
+    }
+    virtual char get_type()=0;
+    virtual Point get_a()=0;
+    virtual Point get_b()=0;
+    virtual Point get_c()=0;
+    virtual double get_r()=0;
+    virtual bool inside_point(Point pt)=0;
+    virtual Point find_fourth_point()=0;
+    void print()
+    {
+        cout << "Perimeter: " << get_perimeter() << endl;
+        cout << "Area: " << get_area() << endl;
+        cout << "Center: ";
+        get_center().print();
+    }
+};
+class Triangle:public Shape
+{
+private:
+    Point a;
+    Point b;
+    Point c;
+public:
+    Triangle()
+    {
+        a;
+        b;
+        c;
+    }
+    Triangle(Point a, Point b, Point c)
+    {
+        this->a = a;
+        this->b = b;
+        this->c = c;
+    }
+    Triangle(const Triangle& other)
+    {
+        a = other.a;
+        b = other.b;
+        c = other.c;
+    }
+    Triangle& operator=(const Triangle& other)
+    {
+        if(this != &other)
+        {
+            a = other.a;
+            b = other.b;
+            c = other.c;
+        }
+        return *this;
+    }
+    bool operator==(const Triangle& other)
+    {
+        return (a == other.a && b == other.b && c == other.c);
+    }
+    virtual double get_area()
+    {
+        double p = get_perimeter()/2;
+        return sqrt(p*(p - get_distance(a,b))*(p - get_distance(a,c))*(p - get_distance(b,c)));
+    }
+    virtual double get_perimeter()
+    {
+        return get_distance(a,b) + get_distance(a,c) + get_distance(b,c);
+    }
+    virtual Point get_center()
+    {
+        double A = get_distance(b,c);
+        double B = get_distance(a,c);
+        double C = get_distance(a,b);
+        Point result;
+        result.x = (A*a.x + B*b.x + C*c.x)/(A + B + C);
+        result.y = (A*a.y + B*b.y + C*c.y)/(A + B + C);
+        return result;
+    }
+    virtual char get_type()
+    {
+        return 't';
+    }
+    virtual Point get_a()
+    {
+        return a;
+    }
+    virtual Point get_b()
+    {
+        return b;
+    }
+    virtual Point get_c()
+    {
+        return c;
+    }
+    virtual double get_r()
+    {
+
+    }
+    double sign (Point p1, Point p2, Point p3)
+    {
+        return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
+    }
+
+    bool inside_point(Point pt)
+    {
+        bool b1, b2, b3;
+
+        b1 = sign(pt, a, b) < 0.0f;
+        b2 = sign(pt, b, c) < 0.0f;
+        b3 = sign(pt, c, a) < 0.0f;
+
+        return ((b1 == b2) && (b2 == b3));
+    }
+    virtual Point find_fourth_point()
+    {
+
+    }
+
+};
+class Circle:public Shape
+{
+private:
+    Point a;
+    int r;
+public:
+    Circle()
+    {
+        a;
+        r = 0;
+    }
+    Circle(Point a, int r)
+    {
+        this->a = a;
+        this->r = r;
+    }
+    Circle(const Circle& other)
+    {
+        a = other.a;
+        r = other.r;
+    }
+    Circle& operator=(const Circle& other)
+    {
+        if(this != &other)
+        {
+            a = other.a;
+            r = other.r;
+        }
+        return *this;
+    }
+    virtual double get_area()
+    {
+        return M_PI*r*r;
+    }
+    virtual double get_perimeter()
+    {
+        return 2*M_PI*r;
+    }
+    virtual Point get_center()
+    {
+        return a;
+    }
+    bool operator==(const Circle& other)
+    {
+        return (a == other.a && r == other.r);
+    }
+    virtual char get_type()
+    {
+        return 'c';
+    }
+    virtual Point get_a()
+    {
+        return a;
+    }
+    virtual Point get_b()
+    {
+
+    }
+    virtual Point get_c()
+    {
+
+    }
+    virtual double get_r()
+    {
+        return r;
+    }
+    bool inside_point(Point pt)
+    {
+        return (pt.x - a.x)*(pt.x - a.x) + (pt.y - a.y)*(pt.y - a.y) < r*r;
+    }
+     virtual Point find_fourth_point()
+    {
+
+    }
+
+};
+
+class Rectangle:public Shape
+{
+private:
+    Point a;
+    Point b;
+    Point c;
+public:
+    Rectangle()
+    {
+        a;
+        b;
+        c;
+    }
+    Rectangle(Point a, Point b, Point c)
+    {
+        this->a = a;
+        this->b = b;
+        this->c = c;
+    }
+    Rectangle(const Rectangle& other)
+    {
+        a = other.a;
+        b = other.b;
+        c = other.c;
+    }
+    Rectangle& operator=(const Rectangle& other)
+    {
+        if(this != &other)
+        {
+            a = other.a;
+            b = other.b;
+            c = other.c;
+        }
+        return *this;
+    }
+    bool operator==(const Rectangle& other)
+    {
+        return (a == other.a && b == other.b && c == other.c);
+    }
+    virtual double get_area()
+    {
+       double A = get_distance(a,b);
+       double B = get_distance(a,c);
+       double C = get_distance(b,c);
+       if(A > B && A > C)
+       {
+           return B*C;
+       }
+       if(B > A && B > C)
+       {
+           return A*C;
+       }
+       else return A*B;
+    }
+    virtual double get_perimeter()
+    {
+       double A = get_distance(a,b);
+       double B = get_distance(a,c);
+       double C = get_distance(b,c);
+       if(A > B && A > C)
+       {
+           return 2*(B + C);
+       }
+       if(B > A && B > C)
+       {
+           return 2*(A + C);
+       }
+       else return 2*(B + A);
+
+    }
+    virtual Point get_center()
+    {
+        Point result;
+        double A = get_distance(a,b);
+        double B = get_distance(a,c);
+        double C = get_distance(b,c);
+        if(A > B && A > C)
+        {
+           result.x = (b.x + c.x)/2;
+           result.y = (b.y + c.y)/2;
+        }
+        if(B > A && B > C)
+        {
+           result.x = (a.x + c.x)/2;
+           result.y = (a.y + c.y)/2;
+        }
+        else
+        {
+           result.x = (a.x + b.x)/2;
+           result.y = (a.y + b.y)/2;
+        }
+         return result;
+    }
+    virtual char get_type()
+    {
+        return 'r';
+    }
+    virtual Point get_a()
+    {
+        return a;
+    }
+    virtual Point get_b()
+    {
+        return b;
+    }
+    virtual Point get_c()
+    {
+        return c;
+    }
+    virtual double get_r()
+    {
+
+    }
+    virtual bool inside_point(Point pt)
+    {
+        if(pt.x > a.x && pt.x < c.x && pt.y > a.y && pt.y < c.y) return true;
+    }
+    virtual Point find_fourth_point()
+    {
+        double A = get_distance(a,b);
+        double B = get_distance(a,c);
+        double C = get_distance(b,c);
+        Point d;
+        if(A > B && A > C)
+        {
+            d.x = b.x - (c.x - a.x);
+            d.y = b.y - (c.y - a.y);
+        }
+        if(B > A && B > C)
+        {
+            d.x = c.x - (b.x - a.x);
+            d.y = c.y - (b.y - a.y);
+        }
+        else
+        {
+            d.x = c.x - (a.x - b.x);
+            d.y = c.y - (a.y - b.y);
+        }
+        return d;
+    }
+};
+
+
+
+bool isContained(Shape* first, Shape* second) //дали first се съдържа в second
+{
+    if(first->get_type() == 't' && second->get_type() == 't')
+    {
+        return (second->inside_point(first->get_a()) && second->inside_point(first->get_b())
+           && second->inside_point(first->get_c()) );
+    }
+    if(first->get_type() == 'r' && second->get_type() == 't')
+    {
+        Point d = first->find_fourth_point();
+        return (second->inside_point(first->get_a()) && second->inside_point(first->get_b())
+        && second->inside_point(first->get_c()) && second->inside_point(d));
+
+    }
+    if(first->get_type() == 't' && second->get_type() == 'c')
+    {
+        return (second->inside_point(first->get_a()) && second->inside_point(first->get_b())
+        && second->inside_point(first->get_c()));
+    }
+    if(first->get_type() == 'c' && second->get_type() == 'c')
+    {
+        if(first->get_r() < second->get_r())
+        {
+            return ((first->get_distance(first->get_center(), second->get_center()) + first->get_r()) < second->get_r());
+        }
+    }
+    if(first->get_type() == 'r' && second->get_type() == 'c')
+    {
+        Point d = first->find_fourth_point();
+        return (second->inside_point(first->get_a()) && second->inside_point(first->get_b())
+        && second->inside_point(first->get_c()) && second->inside_point(d));
+    }
+    if(first->get_type() == 't' && second->get_type() == 'r')
+    {
+        return (second->inside_point(first->get_a()) && second->inside_point(first->get_b())
+        && second->inside_point(first->get_c()));
+    }
+    if(first->get_type() == 'r' && second->get_type() == 'r')
+    {
+        Point d = first->find_fourth_point();
+        return (second->inside_point(first->get_a()) && second->inside_point(first->get_b())
+        && second->inside_point(first->get_c()) && second->inside_point(d));
+    }
+}
+int main()
+{
+    Point s(1,0);
+    Point g(5,0);
+    Point f(4,3);
+    Triangle t(s,g,f);
+    t.print();
+    Triangle t2({15,16},{-7,-5},{20,-12});
+    Circle c1({0,0}, 1);
+    c1.print();
+    Circle c2({0,0}, 6);
+    Rectangle re({0,0}, {0,4}, {6,4});
+    re.print();
+    Shape* shapes[6] = {&t2, &t, &c1, &re, &c2, &re};
+    if(t.inside_point({3,2})) cout << "Point in triangle works." << endl;
+    if(c2.inside_point({1,1})) cout << "Point in circle works." << endl;
+    if(isContained(shapes[1], shapes[0])) cout << "Triangle inside triangle works." << endl;
+    if(isContained(shapes[2], shapes[4]))  cout << "Circle inside circle works." << endl;
+    Rectangle red({0,0}, {0,2}, {2,2});
+    Point res = red.find_fourth_point();
+    res.print();
+    if(red.inside_point({1, 1})) cout << "Point in rectangle works.";
+    return 0;
+
+}
