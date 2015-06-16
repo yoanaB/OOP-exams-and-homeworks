@@ -1,0 +1,229 @@
+#include "figure.h"
+#include <iostream>
+#define M_PI
+#include <cmath>
+
+using namespace std;
+
+Dot::Dot()
+{
+	x = 0;
+	y = 0;
+}
+
+Dot::Dot(double x, double y)
+{
+	this->x = x;
+	this->y = y;
+}
+
+double Dot::getX() const
+{
+	return x;
+}
+
+double Dot::getY() const
+{
+	return y;
+}
+
+void Dot::setX(double x)
+{
+	this->x = x;
+}
+
+void Dot::setY(double y)
+{
+	this->y = y;
+}
+
+void Dot::read()
+{
+	cout << "Enter x:";
+	cin >> x;
+	setX(x);
+	cout << "Enter y:";
+	cin >> y;
+	setY(y);
+}
+
+Dot& Dot :: operator=(const Dot& other)
+{
+	if (this != &other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+	}
+}
+
+bool Dot::operator==(const Dot& other)
+{
+	return(this->x == other.x && this->y == other.y);
+}
+
+void Dot::print() const
+{
+	cout << "Dot: (" << x << ", " << y << ")" << endl;
+}
+
+Triangle::Triangle(Dot a, Dot b, Dot c)
+{
+	if ((a.getX() != b.getX() && b.getX() != c.getX()) || (a.getY() != b.getY() && b.getY() != c.getY()))
+	{
+		this->a[0] = a;
+		this->a[1] = b;
+		this->a[2] = c;
+	}
+}
+
+double Triangle:: getFirstCoordX() const
+{
+	return a[0].getX();
+}
+
+double Triangle::getFirstCoordY() const
+{
+	return a[0].getY();
+}
+
+double Triangle :: getSecondCoordX() const
+{
+	return a[1].getX();
+}
+
+double Triangle :: getSecondCoordY() const
+{
+	a[1].getY();
+}
+
+double Triangle::getThirdCoordX() const
+{
+	return a[2].getX();
+}
+
+double Triangle::getThirdCoordY() const
+{
+	return a[2].getY();
+}
+
+double Triangle::area() const
+{
+	double first = (a[0].x - a[2].x)*(a[1].y - a[0].y);
+	double second = (a[0].x - a[1].x)*(a[2].y - a[0].y);
+	cout << "Triangle's area is :";
+	return abs((first - second) / 2);
+}
+
+double Triangle::perim() const
+{
+	double first = sqrt(pow((a[2].x - a[0].x), 2) + pow((a[2].y - a[0].y), 2));
+	double second = sqrt(pow((a[1].x - a[0].x), 2) + pow((a[1].y - a[0].y), 2));
+	double third = sqrt(pow((a[2].x - a[1].x), 2) + pow((a[2].y - a[1].y), 2));
+	return first + second + third;
+}
+
+Dot& Triangle::getCenter() const
+{
+	double Ox = (a[0].x + a[1].x + a[2].x) / 3;
+	double Oy = (a[0].y + a[1].y + a[2].y) / 3;
+	return Dot(Ox, Oy);
+}
+
+bool Triangle :: operator==(const Triangle& other)
+{
+	return (this->a[0] == other.a[0] &&
+			this->a[1] == other.a[1] &&
+			this->a[2] == other.a[2]);
+}
+
+Rectangle::Rectangle(Dot a, Dot b)
+{
+	if (a.getX() != b.getX() && a.getY() != b.getY())
+	{
+		this->a[0] = a;
+		this->a[1] = b;
+	}
+}
+
+double Rectangle::getFirstCoordX() const
+{
+	return a[0].getX();
+}
+
+double Rectangle:: getSecondCoordX() const
+{
+	return a[1].getX();
+}
+double Rectangle::getFirstCoordY() const
+{
+	return a[0].getY();
+}
+
+double Rectangle::getSecondCoordY() const
+{
+	return a[1].getY();
+}
+
+double Rectangle::getWidth() const
+{
+	return a[1].x - a[0].x;
+}
+
+double Rectangle::getHeight() const
+{
+	return a[1].y - a[0].y;
+}
+
+double Rectangle::area() const
+{
+	return getWidth() * getHeight();
+}
+
+double Rectangle::perim() const
+{
+	return 2 * (getWidth() + getHeight());
+}
+
+Dot& Rectangle::getCenter() const
+{
+	return Dot((a[1].x - a[0].x) / 2, (a[1].y - a[0].y) / 2);
+}
+
+bool Rectangle :: operator==(const Rectangle &other)
+{
+	return (this->a[0] == other.a[0] &&
+			this->a[1] == other.a[1]);
+}
+
+Circle::Circle(Dot c, double r)
+{
+	this->c = c; 
+	this->r = r;
+}
+
+double Circle::getRadius() const
+{
+	return r;
+}
+
+double Circle::area() const
+{
+	return pow(r, 2) M_PI;
+}
+
+double Circle::perim() const
+{
+	return (2 * r)M_PI;
+}
+
+Dot& Circle::getCenter() const
+{
+	return c;
+}
+
+bool Circle :: operator==(const Circle& other)
+{
+	return(this->c == other.c && this->r == other.r);
+}
+
+
